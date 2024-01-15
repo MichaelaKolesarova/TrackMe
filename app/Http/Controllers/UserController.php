@@ -7,6 +7,7 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+    /*
     public function register(Request $request){
         $incommingFields = $request->validate([
             'name' => ['required', 'min:3', 'max:20', Rule::unique('users', 'name')],
@@ -38,4 +39,6 @@ class UserController extends Controller
         }
         return redirect('/');
     }
+
+    */
 }
