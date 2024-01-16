@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
@@ -16,14 +17,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $posts = [];
-    if (auth()->check()){
-        $posts = auth()->user()->usersCoolPosts()->latest()->get();
-    }
 
-    //$posts = Post::where('user_id', auth()->id())->get();
-    return view('welcome', ['posts' => $posts]);
+Route::get('/', function () {
+    return view('welcome');
 });
 
 Route::post('/register', [UserController::class, "register"]);
@@ -31,11 +27,15 @@ Route::post('/login', [UserController::class, "login"]);
 Route::post('/logout', [UserController::class, "logout"]);
 
 //Blog post
-Route::post('/createPost', [PostController::class, 'createPost']);
-Route::get('/edit-post/{post}', [PostController::class, 'showEditScreen']);
-Route::put('/edit-post/{post}', [PostController::class, 'updatePost']);
-Route::delete('/delete-post/{post}', [PostController::class, 'deletePost']);
+//Route::post('/createPost', [PostController::class, 'createPost']);
+//Route::get('/edit-post/{post}', [PostController::class, 'showEditScreen']);
+//Route::put('/edit-post/{post}', [PostController::class, 'updatePost']);
+//Route::delete('/delete-post/{post}', [PostController::class, 'deletePost']);
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+//TaskRelatedRoutes
+Route::post('/create-task', [TaskController::class, 'createTask'])->name('create.task');;

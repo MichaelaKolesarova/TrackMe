@@ -152,14 +152,14 @@
             </div>
             <div class="sb-sidenav-footer">
                 <div class="small">Logged in as:</div>
-                Start Bootstrap
+                {{auth()->user()->name}}
             </div>
         </nav>
     </div>
 
-    <div id="content-wrapper max-width">
+    <div class="full-width">
         <div id="content">
-            <main class="py-4">
+            <main >
                 @yield('content')
             </main>
         </div>

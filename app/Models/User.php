@@ -43,8 +43,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function usersCoolPosts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function usersTasks(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Post::class, 'user_id');
+        return $this->hasMany(Task::class, 'user_id');
     }
 }
