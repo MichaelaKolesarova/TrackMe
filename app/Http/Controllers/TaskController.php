@@ -45,5 +45,13 @@ class TaskController extends Controller
         return response()->json(['message' => 'Task updated successfully']);
     }
 
+    public function showTaskOverview(Task $task)
+    {
+        return view('task_overview', ['task' => $task]);
+
+    }
+
+
+
 
 }

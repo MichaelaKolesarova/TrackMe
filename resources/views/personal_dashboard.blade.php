@@ -25,29 +25,31 @@
                             <span class="badge bg-secondary right brown">{{auth()->user()->usersTasks(TaskStatusEnum::ToDo)->count()}} tasks</span>
                         </div>
 
-                        <div taskStatus="{{TaskStatusEnum::ToDo}}" id="card-tasks-todo">
+                        <div taskStatus="{{TaskStatusEnum::ToDo}}" id="card-tasks-todo" class="min-height">
 
                             @foreach(auth()->user()->usersTasks(TaskStatusEnum::ToDo) as $task)
                                 <div id="{{$task->id}}" class="task-card" draggable="true">
-                                    <div class="task-name fill-width row">
-                                        <span>{{$task->title}}</span>
+                                        <div class="task-name fill-width row">
+                                            <a href="{{ route('task.overview', ['task' => $task->id]) }}" class="task-title task-link" draggable="false">
+                                                <span>{{$task->title}}</span>
 
-                                        <div class="dropdown right">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                 fill="currentColor"
-                                                 class="bi bi-three-dots-vertical dropdown-toggle" role="button"
-                                                 id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"
-                                                 viewBox="0 0 16 16">
-                                                <path
-                                                    d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                                            </svg>
+                                                <div class="dropdown right">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                         fill="currentColor"
+                                                         class="bi bi-three-dots-vertical dropdown-toggle" role="button"
+                                                         id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"
+                                                         viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                                                    </svg>
 
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <li><a class="dropdown-item" href="#">Edit</a></li>
-                                                <li><a class="dropdown-item" href="#">Delete</a></li>
-                                            </ul>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                        <li><a class="dropdown-item" href="#">Edit</a></li>
+                                                        <li><a class="dropdown-item" href="#">Delete</a></li>
+                                                    </ul>
+                                                </div>
+                                            </a>
                                         </div>
-                                    </div>
                                 </div>
                             @endforeach
                         </div>
@@ -63,28 +65,30 @@
                                 class="badge bg-secondary right brown">{{auth()->user()->usersTasks(TaskStatusEnum::InProgress)->count()}} tasks</span>
                         </div>
 
-                        <div taskStatus="{{TaskStatusEnum::InProgress}}" id="card-tasks-inprogres">
+                        <div taskStatus="{{TaskStatusEnum::InProgress}}" id="card-tasks-inprogres"  class="min-height">
 
                             @foreach(auth()->user()->usersTasks(TaskStatusEnum::InProgress) as $task)
                                 <div id="{{$task->id}}" class="task-card" draggable="true">
                                     <div class="task-name fill-width row">
-                                        <span>{{$task->title}}</span>
+                                        <a href="{{ route('task.overview', ['task' => $task->id]) }}" class="task-title task-link" draggable="false">
+                                            <span>{{$task->title}}</span>
 
-                                        <div class="dropdown right">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                 fill="currentColor"
-                                                 class="bi bi-three-dots-vertical dropdown-toggle" role="button"
-                                                 id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"
-                                                 viewBox="0 0 16 16">
-                                                <path
-                                                    d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                                            </svg>
+                                            <div class="dropdown right">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                     fill="currentColor"
+                                                     class="bi bi-three-dots-vertical dropdown-toggle" role="button"
+                                                     id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"
+                                                     viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                                                </svg>
 
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <li><a class="dropdown-item" href="#">Edit</a></li>
-                                                <li><a class="dropdown-item" href="#">Delete</a></li>
-                                            </ul>
-                                        </div>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <li><a class="dropdown-item" href="#">Edit</a></li>
+                                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                             @endforeach
@@ -102,27 +106,30 @@
                                 class="badge bg-secondary right brown">{{auth()->user()->usersTasks(TaskStatusEnum::Blocked)->count()}} tasks</span>
                         </div>
 
-                        <div taskStatus="{{TaskStatusEnum::Blocked}}" id="card-tasks-blocked">
+                        <div taskStatus="{{TaskStatusEnum::Blocked}}" id="card-tasks-blocked"  class="min-height">
                             @foreach(auth()->user()->usersTasks(TaskStatusEnum::Blocked) as $task)
                                 <div id="{{$task->id}}"  class="task-card" draggable="true">
                                     <div class="task-name fill-width row">
-                                        <span>{{$task->title}}</span>
+                                        <a href="{{ route('task.overview', ['task' => $task->id]) }}" class="task-title task-link" draggable="false">
+                                            <span>{{$task->title}}</span>
 
-                                        <div class="dropdown right">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                 fill="currentColor"
-                                                 class="bi bi-three-dots-vertical dropdown-toggle" role="button"
-                                                 id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"
-                                                 viewBox="0 0 16 16">
-                                                <path
-                                                    d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                                            </svg>
+                                            <div class="dropdown right">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                     fill="currentColor"
+                                                     class="bi bi-three-dots-vertical dropdown-toggle" role="button"
+                                                     id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"
+                                                     viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                                                </svg>
 
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <li><a class="dropdown-item" href="#">Edit</a></li>
-                                                <li><a class="dropdown-item" href="#">Delete</a></li>
-                                            </ul>
-                                        </div>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <li><a class="dropdown-item" href="#">Edit</a></li>
+                                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                                </ul>
+                                            </div>
+
+                                        </a>
                                     </div>
                                 </div>
                             @endforeach
@@ -139,27 +146,29 @@
                                 class="badge bg-secondary right brown">{{auth()->user()->usersTasks(TaskStatusEnum::Done)->count()}} tasks</span>
                         </div>
 
-                        <div taskStatus="{{TaskStatusEnum::Done}}" id="card-tasks-done" class="small-margin">
+                        <div taskStatus="{{TaskStatusEnum::Done}}" id="card-tasks-done"  class="min-height" >
                             @foreach(auth()->user()->usersTasks(TaskStatusEnum::Done) as $task)
-                                <div id="{{$task->id}}" class="task-card" draggable="true">
+                                <div id="{{$task->id}}" class="task-card" draggable="true" onclick="/get-task/{{$task->id}}">
                                     <div class="task-name fill-width row">
-                                        <span>{{$task->title}}</span>
+                                        <a href="{{ route('task.overview', ['task' => $task->id]) }}" class="task-title task-link" draggable="false">
+                                            <span>{{$task->title}}</span>
 
-                                        <div class="dropdown right">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                 fill="currentColor"
-                                                 class="bi bi-three-dots-vertical dropdown-toggle" role="button"
-                                                 id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"
-                                                 viewBox="0 0 16 16">
-                                                <path
-                                                    d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                                            </svg>
+                                            <div class="dropdown right">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                     fill="currentColor"
+                                                     class="bi bi-three-dots-vertical dropdown-toggle" role="button"
+                                                     id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"
+                                                     viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                                                </svg>
 
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <li><a class="dropdown-item" href="#">Edit</a></li>
-                                                <li><a class="dropdown-item" href="#">Delete</a></li>
-                                            </ul>
-                                        </div>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <li><a class="dropdown-item" href="#">Edit</a></li>
+                                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                             @endforeach

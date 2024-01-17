@@ -11951,7 +11951,7 @@ sb-topnav {
 .task-card {
     border-radius: 3px;
     background: #1e30f3;
-    background: linear-gradient(135deg, #737de7 0%, #b76e93 100%);
+    background: linear-gradient(135deg, #b0b8f8 0%, #c79fb3 100%);
     display: block;
     margin: 5px;
     padding: 1%;
@@ -12003,4 +12003,15 @@ img.task-assignee-photo{
 }
 .right {
     text-align: right;
+}
+
+.min-height{
+    min-height: 20px;
+}
+
+.task-link {
+    display: block;
+    text-decoration: none; /* Optional: remove default underline */
+    color: inherit; /* Optional: inherit text color */
+    cursor: pointer; /* Optional: change cursor on hover */
 }
