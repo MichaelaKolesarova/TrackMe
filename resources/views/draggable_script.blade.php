@@ -6,8 +6,11 @@
     let blocked_card = document.getElementById("card-tasks-blocked");
     let done_card = document.getElementById("card-tasks-done");
 
+    let selected = null;
+
     function handleDragStart(event) {
         selected = event.target;
+        return selected;
     }
 
     function handleDragOver(event) {
@@ -15,18 +18,18 @@
     }
 
     function handleDrop(targetCard, event) {
-        targetCard.appendChild(selected);
-        selected = null;
+        event.stopPropagation();
         let taskId = selected.getAttribute('id');
+        targetCard.appendChild(selected);
 
         fetch(`/updateTaskStatus/${taskId}`, {
-            method: 'PATCH', // Assuming you are using a PATCH request for partial updates
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
             },
             body: JSON.stringify({
-                status: targetCard.getAttribute('taskStatus'),
+                taskStatus: targetCard.getAttribute('taskStatus'),
             }),
         })
             .then(response => {
@@ -36,7 +39,7 @@
                 return response.json();
             })
             .then(data => {
-                // Handle the success response if needed
+                selected = null;
             })
             .catch(error => {
                 // Handle the error if needed
@@ -44,7 +47,6 @@
 
     }
     for (let card of task_cards) {
-        card.addEventListener("dragstart", handleDragStart);
         to_do_card.addEventListener("dragover", handleDragOver);
         to_do_card.addEventListener("drop", function (event) {
             handleDrop(to_do_card, event);

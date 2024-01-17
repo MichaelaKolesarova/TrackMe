@@ -25,10 +25,10 @@
                             <span class="badge bg-secondary right brown">{{auth()->user()->usersTasks(TaskStatusEnum::ToDo)->count()}} tasks</span>
                         </div>
 
-                        <div id="card-tasks-todo">
+                        <div taskStatus="{{TaskStatusEnum::ToDo}}" id="card-tasks-todo">
 
                             @foreach(auth()->user()->usersTasks(TaskStatusEnum::ToDo) as $task)
-                                <div class="task-card" draggable="true">
+                                <div id="{{$task->id}}" class="task-card" draggable="true">
                                     <div class="task-name fill-width row">
                                         <span>{{$task->title}}</span>
 
@@ -63,10 +63,10 @@
                                 class="badge bg-secondary right brown">{{auth()->user()->usersTasks(TaskStatusEnum::InProgress)->count()}} tasks</span>
                         </div>
 
-                        <div id="card-tasks-inprogres">
+                        <div taskStatus="{{TaskStatusEnum::InProgress}}" id="card-tasks-inprogres">
 
                             @foreach(auth()->user()->usersTasks(TaskStatusEnum::InProgress) as $task)
-                                <div class="task-card" draggable="true">
+                                <div id="{{$task->id}}" class="task-card" draggable="true">
                                     <div class="task-name fill-width row">
                                         <span>{{$task->title}}</span>
 
@@ -102,9 +102,9 @@
                                 class="badge bg-secondary right brown">{{auth()->user()->usersTasks(TaskStatusEnum::Blocked)->count()}} tasks</span>
                         </div>
 
-                        <div id="card-tasks-blocked">
+                        <div taskStatus="{{TaskStatusEnum::Blocked}}" id="card-tasks-blocked">
                             @foreach(auth()->user()->usersTasks(TaskStatusEnum::Blocked) as $task)
-                                <div class="task-card" draggable="true">
+                                <div id="{{$task->id}}"  class="task-card" draggable="true">
                                     <div class="task-name fill-width row">
                                         <span>{{$task->title}}</span>
 
@@ -139,9 +139,9 @@
                                 class="badge bg-secondary right brown">{{auth()->user()->usersTasks(TaskStatusEnum::Done)->count()}} tasks</span>
                         </div>
 
-                        <div id="card-tasks-done" class="small-margin">
+                        <div taskStatus="{{TaskStatusEnum::Done}}" id="card-tasks-done" class="small-margin">
                             @foreach(auth()->user()->usersTasks(TaskStatusEnum::Done) as $task)
-                                <div class="task-card" draggable="true">
+                                <div id="{{$task->id}}" class="task-card" draggable="true">
                                     <div class="task-name fill-width row">
                                         <span>{{$task->title}}</span>
 

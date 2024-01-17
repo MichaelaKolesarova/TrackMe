@@ -38,4 +38,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 //TaskRelatedRoutes
-Route::post('/create-task', [TaskController::class, 'createTask'])->name('create.task');;
+Route::post('/create-task', [TaskController::class, 'createTask'])->name('create.task');
+Route::put('/updateTaskStatus/{taskId}', [TaskController::class, 'updateTask']);

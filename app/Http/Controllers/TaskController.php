@@ -28,4 +28,22 @@ class TaskController extends Controller
         return redirect('/home');
 
     }
+
+    public function updateTask(Request $request, $taskId)
+    {
+        $task = Task::find($taskId);
+        if (!$task) {
+            return response()->json(['error' => 'Task not found'], 404);
+        }
+
+        $this->validate($request, [
+            'taskStatus' => 'required']);
+
+        $task->taskStatus = $request->get('taskStatus');
+        $task->save();
+
+        return response()->json(['message' => 'Task updated successfully']);
+    }
+
+
 }
