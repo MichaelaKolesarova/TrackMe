@@ -11950,11 +11950,13 @@ sb-topnav {
 
 .task-card {
     border-radius: 3px;
-    background: var(--bs-purple);
+    background: #1e30f3;
+    background: linear-gradient(135deg, #737de7 0%, #b76e93 100%);
     display: block;
     margin: 5px;
     padding: 1%;
     height: fit-content;
+    cursor: pointer;
 }
 
 .task-assignee-photo {
@@ -11998,4 +12000,7 @@ img.task-assignee-photo{
 }
 .small-margin{
     margin: 10px;
+}
+.right {
+    text-align: right;
 }

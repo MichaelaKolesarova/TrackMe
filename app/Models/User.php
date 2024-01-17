@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Helpers\DataStructures\TaskStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -43,8 +44,16 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function usersTasks(): \Illuminate\Database\Eloquent\Relations\HasMany
+
+    /**
+     * Get all tasks assigned to the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function usersTasks(TaskStatusEnum $taskStatus)
     {
-        return $this->hasMany(Task::class, 'user_id');
+        return $this->hasMany(Task::class, 'assignee', )->where('taskStatus', $taskStatus)->get();
     }
+
+
 }
