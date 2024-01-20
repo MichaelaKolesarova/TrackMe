@@ -32,6 +32,7 @@
                             @foreach(User::all() as $user)
                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                             @endforeach
+                            <option value="0">unassigned</option>
                         </select>
                         <div class="invalid-feedback">
                             Please select an assignee.

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
@@ -36,9 +38,19 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
 //TaskRelatedRoutes
 Route::post('/create-task', [TaskController::class, 'createTask'])->name('create.task');
 Route::put('/updateTaskStatus/{taskId}', [TaskController::class, 'updateTask']);
 Route::get('/task_overview/{task}', [TaskController::class, 'showTaskOverview'])->name('task.overview');
+//update on obverview
+Route::post('/updateOnlyStatus', [TaskController::class, 'updateTaskStatus'])->name('updateOnlyStatus');
+Route::post('/updateOnlyAssignee', [TaskController::class, 'updateAssignee'])->name('updateOnlyAssignee');
+
+//comments
+Route::post('/create-comment', [CommentController::class, 'createComment'])->name('create.comment');
+
+//messages
+Route::get('/openChat/{userId}', [MessageController::class, 'openChat'])->name('openChat');
+
+
 

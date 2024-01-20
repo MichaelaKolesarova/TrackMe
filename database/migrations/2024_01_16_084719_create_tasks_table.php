@@ -19,7 +19,7 @@ return new class extends Migration
             $table->longText('description');
             $table-> unsignedBigInteger('author');
             $table-> foreign('author')->references('id')->on('users')->onDelete('cascade');
-            $table-> unsignedBigInteger('assignee')->unsigned();
+            $table-> unsignedBigInteger('assignee')->unsigned()->nullable();
             $table-> foreign('assignee')->references('id')->on('users')->onDelete('cascade');
             $table->date('dueDate')->nullable();
             $table->enum('priority', PriorityEnum::values());

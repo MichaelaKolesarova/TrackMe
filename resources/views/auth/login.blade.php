@@ -11,6 +11,13 @@
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
 
+                            <div class="container-fluid">
+                                <div class="row justify-content-center">
+                                    <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 me-3"><i class="bi bi-key"></i></div>
+                                </div>
+                            </div>
+                            <div class="small-margin small-margin"></div>
+
                             <div class="row mb-3">
                                 <label for="email"
                                        class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
@@ -64,11 +71,6 @@
                                         {{ __('Login') }}
                                     </button>
 
-                                    @if (Route::has('password.request'))
-                                        <a class="btn btn-link" href="{{ route('password.request') }}">
-                                            {{ __('Forgot Your Password?') }}
-                                        </a>
-                                    @endif
                                 </div>
                             </div>
                         </form>

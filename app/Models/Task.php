@@ -11,4 +11,14 @@ class Task extends Model
 
     protected $fillable = ['title', 'description', 'author', 'assignee', 'dueDate', 'priority', 'taskStatus'];
 
+    public function assignedTo()
+    {
+        return $this->belongsTo(User::class, 'assignee');
+    }
+
+    public function authoredBy()
+    {
+        return $this->belongsTo(User::class, 'author');
+    }
+
 }

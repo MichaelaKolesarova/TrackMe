@@ -19,9 +19,12 @@ class TaskController extends Controller
             'dueDate' => 'required',
             'priority' => 'required'
         ]);
+        if( $inputFields['assignee'] == 0){
+            $inputFields['assignee'] = null;
+        }
         $inputFields['title'] = strip_tags($inputFields['title']);
         $inputFields['description'] = strip_tags($inputFields['description']);
-        $inputFields['taskStatus'] = TaskStatusEnum::ToDo;
+        //$inputFields['taskStatus'] = TaskStatusEnum::ToDo;
         $inputFields['author'] = auth()->id();
 
         Task::create($inputFields);
@@ -42,7 +45,50 @@ class TaskController extends Controller
         $task->taskStatus = $request->get('taskStatus');
         $task->save();
 
-        return response()->json(['message' => 'Task updated successfully']);
+        redirect()->back()->with(['message' => 'Task updated successfully']);
+    }
+
+    public function updateTaskStatus(Request $request)
+    {
+
+        $inputFields = $request->validate([
+            'taskId' => 'required',
+            'newStatus' => 'required'
+        ]);
+
+        $task = Task::find($inputFields['taskId']);
+        if (!$task) {
+            return response()->json(['error' => 'Task not found'], 404);
+        }
+        $task->taskStatus = $inputFields['newStatus'];
+        $task->save();
+
+        return redirect()->back()->with(['success' => 'Task updated successfully']);
+
+    }
+
+    public function updateAssignee(Request $request)
+    {
+
+        $inputFields = $request->validate([
+            'taskId' => 'required',
+            'newAssignee' => 'required'
+        ]);
+
+        $task = Task::find($inputFields['taskId']);
+        if (!$task) {
+            return response()->json(['error' => 'Task not found'], 404);
+        }
+
+        if( $inputFields['newAssignee'] == 0){
+            $task->assignee = null;
+        } else{
+            $task->assignee = $inputFields['newAssignee'];
+        }
+        $task->save();
+
+        return redirect()->back()->with(['success' => 'Task updated successfully']);
+
     }
 
     public function showTaskOverview(Task $task)
