@@ -37,6 +37,8 @@ Route::post('/logout', [UserController::class, "logout"]);
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home_team', [App\Http\Controllers\HomeController::class, 'team'])->name('home_team');
+
 
 //TaskRelatedRoutes
 Route::post('/create-task', [TaskController::class, 'createTask'])->name('create.task');

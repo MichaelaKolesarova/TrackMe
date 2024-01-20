@@ -21,4 +21,11 @@ class Task extends Model
         return $this->belongsTo(User::class, 'author');
     }
 
+    public function unassigned()
+    {
+        return $this::all()->whereNull('assigned');
+    }
+
+
+
 }
