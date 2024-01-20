@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['from', 'to', 'content'];
+
+    public function authoredBy()
+    {
+        return $this->belongsTo(User::class, 'from');
+    }
 }

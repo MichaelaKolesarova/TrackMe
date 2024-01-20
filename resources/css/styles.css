@@ -19,6 +19,13 @@
     margin-bottom: 15px;
 }
 
+.be-img-comment-right {
+    width: 60px;
+    height: 60px;
+    float: right;
+    margin-bottom: 15px;
+}
+
 .be-ava-comment {
     width: 60px;
     height: 60px;
@@ -29,7 +36,17 @@
     margin-left: 80px;
 }
 
+.be-comment-content-right {
+    margin-right: 80px;
+}
+
 .be-comment-content span {
+    display: inline-block;
+    width: 49%;
+    margin-bottom: 15px;
+}
+
+.be-comment-content-right span {
     display: inline-block;
     width: 49%;
     margin-bottom: 15px;
@@ -50,8 +67,18 @@
     margin-bottom: 15px;
 }
 
-.be-comment-time {
+.be-comment-content-right span {
+    display: inline-block;
+    width: 49%;
+    margin-bottom: 15px;
+}
+
+.be-comment-time-right{
     text-align: right;
+}
+
+.be-comment-time-left{
+    text-align: left;
 }
 
 .be-comment-time {

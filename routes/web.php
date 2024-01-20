@@ -51,6 +51,7 @@ Route::post('/create-comment', [CommentController::class, 'createComment'])->nam
 
 //messages
 Route::get('/openChat/{userId}', [MessageController::class, 'openChat'])->name('openChat');
+Route::post('/create-message', [MessageController::class, 'createMessage'])->name('create.message');
 
 
 
