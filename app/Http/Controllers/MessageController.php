@@ -19,6 +19,11 @@ class MessageController extends Controller
         return view('chat', ['user' => $user]);
     }
 
+    public function openTeamChat()
+    {
+        return view('team_chat');
+    }
+
     public function createMessage(Request $request)
     {
 

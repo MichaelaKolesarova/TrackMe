@@ -1,20 +1,9 @@
+
+
 @php
     use App\Helpers\DataStructures\TaskStatusEnum;
     use App\Models\Task;use App\Models\User;
 @endphp
-
-@extends('layouts.base')
-
-@section('content')
-    <div class="row small-margin">
-        <h1 class="col display-3 fw-bolder"><span
-                class="text-gradient d-inline">team dashboard</span></h1>
-
-        <a class="col col-lg-3 btn btn-primary fw-bolder small-margin d-flex align-items-center justify-content-center"
-           data-bs-toggle="modal" data-bs-target="#ModalCreate">New Task</a>
-        <div class="fs-3 fw-light text-muted">unassigned</div>
-    </div>
-    <div style="margin: 50px"></div>
 
     <div id="tasks_container" class="col fill-width small-margin">
         <div class="row justify-content-around">
@@ -23,12 +12,12 @@
                     <div class="card-body">
                         <div>
                             <span class="card-title-text">TO DO</span>
-                            <span class="badge bg-secondary right brown">{{Task::all()->whereNull('assignee')->where('taskStatus', TaskStatusEnum::ToDo->value)->count() }} tasks</span>
+                            <span class="badge bg-secondary right brown">{{App\Models\Task::all()->where('assignee', $chosenUser)->where('taskStatus', App\Helpers\DataStructures\TaskStatusEnum::ToDo->value)->count() }} tasks</span>
                         </div>
 
                         <div taskStatus="{{TaskStatusEnum::ToDo}}" id="card-tasks-todo" class="min-height">
 
-                            @foreach(Task::all()->whereNull('assignee')->where('taskStatus', TaskStatusEnum::ToDo->value) as $task)
+                            @foreach(Task::all()->where('assignee', $chosenUser)->where('taskStatus', App\Helpers\DataStructures\TaskStatusEnum::ToDo->value) as $task)
                                 <div id="{{$task->id}}" class="task-card" draggable="true">
                                     <div class="task-name fill-width row">
                                         <a href="{{ route('task.overview', ['task' => $task->id]) }}"
@@ -65,12 +54,12 @@
                         <div>
                             <span class="card-title-text">IN PROGRESS</span>
                             <span
-                                class="badge bg-secondary right brown">{{Task::all()->whereNull('assignee')->where('taskStatus',  TaskStatusEnum::InProgress->value)->count()}} tasks</span>
+                                class="badge bg-secondary right brown">{{Task::all()->where('assignee', $chosenUser)->where('taskStatus',  TaskStatusEnum::InProgress->value)->count()}} tasks</span>
                         </div>
 
                         <div taskStatus="{{TaskStatusEnum::InProgress}}" id="card-tasks-inprogres" class="min-height">
 
-                            @foreach(Task::all()->whereNull('assignee')->where('taskStatus', TaskStatusEnum::InProgress->value) as $task)
+                            @foreach(Task::all()->where('assignee', $chosenUser)->where('taskStatus', TaskStatusEnum::InProgress->value) as $task)
                                 <div id="{{$task->id}}" class="task-card" draggable="true">
                                     <div class="task-name fill-width row">
                                         <a href="{{ route('task.overview', ['task' => $task->id]) }}"
@@ -108,12 +97,12 @@
                         <div>
                             <span class="card-title-text">BLOCKED</span>
                             <span
-                                class="badge bg-secondary right brown">{{Task::all()->where('taskStatus', TaskStatusEnum::Blocked->value)->count()}} tasks</span>
+                                class="badge bg-secondary right brown">{{Task::all()->where('assignee', $chosenUser)->where('taskStatus', TaskStatusEnum::Blocked->value)->count()}} tasks</span>
                         </div>
 
                         <div taskStatus="{{TaskStatusEnum::Blocked}}" id="card-tasks-blocked" class="min-height">
 
-                            @foreach(Task::all()->whereNull('assignee')->where('taskStatus', TaskStatusEnum::Blocked->value) as $task)
+                            @foreach(Task::all()->where('assignee', $chosenUser)->where('taskStatus', TaskStatusEnum::Blocked->value) as $task)
                                 <div id="{{$task->id}}" class="task-card" draggable="true">
                                     <div class="task-name fill-width row">
                                         <a href="{{ route('task.overview', ['task' => $task->id]) }}"
@@ -151,11 +140,11 @@
                         <div>
                             <span class="card-title-text">DONE</span>
                             <span
-                                class="badge bg-secondary right brown">{{Task::all()->whereNull('assignee')->where('taskStatus', TaskStatusEnum::Done->value)->count()}} tasks</span>
+                                class="badge bg-secondary right brown">{{Task::all()->where('assignee', $chosenUser)->where('taskStatus', TaskStatusEnum::Done->value)->count()}} tasks</span>
                         </div>
 
                         <div taskStatus="{{TaskStatusEnum::Done}}" id="card-tasks-done" class="min-height">
-                            @foreach(Task::all()->whereNull('assignee')->where('taskStatus', TaskStatusEnum::Done->value) as $task)
+                            @foreach(Task::all()->where('assignee', $chosenUser)->where('taskStatus', TaskStatusEnum::Done->value) as $task)
                                 <div id="{{$task->id}}" class="task-card" draggable="true"
                                      onclick="/get-task/{{$task->id}}">
                                     <div class="task-name fill-width row">
@@ -191,77 +180,3 @@
         </div>
     </div>
 
-
-
-
-    <!--ASSIGNED To OTHER TEAM MEMBERS-->
-
-
-
-    <div class="row small-margin">
-        @php
-            $defaultUserId = (auth()->id() == 1) ? 2 : 1;
-            $chosenUser = $defaultUserId;
-        @endphp
-        <div class="fs-3 fw-light text-muted col">other team members</div>
-
-        <div id="button">
-            @include('dropdown_button', ['chosenUser' => $chosenUser ])
-        </div>
-
-
-    </div>
-
-    <div style="margin: 50px"></div>
-
-    <div id="cards">
-        @include('team_dashboard_specific_member_content', ['chosenUser' => $chosenUser ])
-    </div>
-
-
-    <script>
-        function updateChosenUser(userId) {
-
-//cards s  úlohami
-            $.ajax({
-                type: 'POST',
-                url: '/update-chosen-user',
-                data: { userId: userId },
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                },
-                success: function(response) {
-                    document.getElementById('cards').innerHTML = '';
-
-                    document.getElementById('cards').innerHTML = response;
-                    document.getElementById('assigneeDropdown').click();
-
-                }
-            });
-
-            //meno na buttone
-            $.ajax({
-                type: 'POST',
-                url: '/update-button',
-                data: { userId: userId },
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                },
-                success: function(response) {
-                    document.getElementById('button').innerHTML = '';
-                    document.getElementById('button').innerHTML = response;
-                }
-            });
-
-            document.getElementById('button').innerHTML = response;
-
-        }
-
-    </script>
-
-    @include('new_task_popup')
-    @include('draggable_script')
-
-
-
-@endsection

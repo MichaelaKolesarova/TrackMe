@@ -28,14 +28,9 @@ Route::post('/register', [UserController::class, "register"]);
 Route::post('/login', [UserController::class, "login"]);
 Route::post('/logout', [UserController::class, "logout"]);
 
-//Blog post
-//Route::post('/createPost', [PostController::class, 'createPost']);
-//Route::get('/edit-post/{post}', [PostController::class, 'showEditScreen']);
-//Route::put('/edit-post/{post}', [PostController::class, 'updatePost']);
-//Route::delete('/delete-post/{post}', [PostController::class, 'deletePost']);
-
 Auth::routes();
 
+//dashboards
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home_team', [App\Http\Controllers\HomeController::class, 'team'])->name('home_team');
 
@@ -44,6 +39,9 @@ Route::get('/home_team', [App\Http\Controllers\HomeController::class, 'team'])->
 Route::post('/create-task', [TaskController::class, 'createTask'])->name('create.task');
 Route::put('/updateTaskStatus/{taskId}', [TaskController::class, 'updateTask']);
 Route::get('/task_overview/{task}', [TaskController::class, 'showTaskOverview'])->name('task.overview');
+Route::post('/update-chosen-user', [TaskController::class, 'updateChosenUserCards'])->name('update-chosen-user');
+Route::post('/update-button', [TaskController::class, 'updateButton'])->name('update-button');
+
 //update on obverview
 Route::post('/updateOnlyStatus', [TaskController::class, 'updateTaskStatus'])->name('updateOnlyStatus');
 Route::post('/updateOnlyAssignee', [TaskController::class, 'updateAssignee'])->name('updateOnlyAssignee');
@@ -53,6 +51,7 @@ Route::post('/create-comment', [CommentController::class, 'createComment'])->nam
 
 //messages
 Route::get('/openChat/{userId}', [MessageController::class, 'openChat'])->name('openChat');
+Route::get('/openTeamChat/', [MessageController::class, 'openTeamChat'])->name('openTeamChat');
 Route::post('/create-message', [MessageController::class, 'createMessage'])->name('create.message');
 
 

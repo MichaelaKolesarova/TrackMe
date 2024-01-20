@@ -97,6 +97,20 @@ class TaskController extends Controller
 
     }
 
+    public function updateChosenUserCards(Request $request)
+    {
+        $userId = $request['userId'];
+        return view('team_dashboard_specific_member_content', ['chosenUser' => $userId ])->render();
+
+    }
+
+    public function updateButton(Request $request)
+    {
+        $userId = $request['userId'];
+        return view('dropdown_button', ['chosenUser' => $userId ])->render();
+
+    }
+
 
 
 

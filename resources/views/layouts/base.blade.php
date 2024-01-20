@@ -39,7 +39,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 </head>
 <body class="sb-nav-fixed">
@@ -170,12 +170,12 @@
                         </nav>
                     </div>
                     <div class="sb-sidenav-menu-heading">Chats</div>
-                    <a class="nav-link" href="charts.html">
+                    <a class="nav-link" href="/openTeamChat">
                         <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                         Team Chat
                     </a>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseChats"
-                       aria-expanded="false" aria-controls="collapseChats">
+                       aria-expanded="true" aria-controls="collapseChats">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                         IndividualChats
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
