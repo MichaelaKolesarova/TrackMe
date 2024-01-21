@@ -41,6 +41,7 @@ Route::put('/updateTaskStatus/{taskId}', [TaskController::class, 'updateTask']);
 Route::get('/task_overview/{task}', [TaskController::class, 'showTaskOverview'])->name('task.overview');
 Route::post('/update-chosen-user', [TaskController::class, 'updateChosenUserCards'])->name('update-chosen-user');
 Route::post('/update-button', [TaskController::class, 'updateButton'])->name('update-button');
+Route::get('/deleteTask/{id}', [TaskController::class, 'deleteTask'])->name('deleteTask');
 
 //update on obverview
 Route::post('/updateOnlyStatus', [TaskController::class, 'updateTaskStatus'])->name('updateOnlyStatus');

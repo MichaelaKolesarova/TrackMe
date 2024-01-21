@@ -6,41 +6,29 @@
     <div class="container-fluid small-margin">
         <div class="col ">
             <div class="row">
-                <h1 class="col fw-bolder small-margin"><span
-                        class="text-gradient d-inline ">{{$task->title}}</span></h1>
+                <div class="col d-flex align-items-center" style="padding-right: 50px">
+                    <h1 class="fw-bolder small-margin"><span class="text-gradient d-inline">{{$task->title}}</span></h1>
+
+                    @if(auth()->id() == $task->assignee)
+                        <form action="{{ route('deleteTask', ['id' => $task->id]) }}" method="get" class=" ms-auto">
+                            @csrf
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
+                    @endif
+
+
+                </div>
+
 
                 <h5 class="small-margin fs-3 text-muted"> ID: <span style="color: #1a1e21">{{$task->id}} </span></h5>
 
                 <div class="col small-margin">
 
-                    <!--
-                    <div class="btn-group almost-full-width-buttons margin-between-sections" role="group" aria-label="Basic outlined example">
-                        <button type="button" class="btn btn-outline-dark">Attachement</button>
-                        <button type="button" class="btn btn-outline-dark">Create linked subtask</button>
-                        <button type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Link Issue</button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">to existing issue</a></li>
-                            <li><a class="dropdown-item" href="#">to new issue</a></li>
-                        </ul>
-                        <button type="button" class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Copy Issue</button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">as new issue</a></li>
-                            <li><a class="dropdown-item" href="#">as update of old issue</a></li>
-                        </ul>
-                        <button type="button" class="btn btn-outline-dark">...</button>
-                    </div>
-                    -->
-
-
                     <h5 class="fs-3 text-muted"> Description:</h5>
                     <p class="margin-between-sections "><span style="color: #1a1e21">{{$task->description}}</span></p>
 
-
-                    <h5 class="fs-3 text-muted"> Attachements:</h5>
-                    <div class="mb-3">
-                        <input class="form-control" type="file" id="formFile">
-                    </div>
 
                     <h5 class="fs-3 text-muted"> Comments:</h5>
                     <div class="mb-1" id="comments-container">
