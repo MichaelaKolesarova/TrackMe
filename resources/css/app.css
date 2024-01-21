@@ -105,9 +105,10 @@ body {
 }
 
 .scrollable {
-    overflow-y: auto;
+    overflow-y: auto!important;
     max-height: calc(100vh - 270px);
 }
+
 
 hr {
     margin: 1rem 0;
