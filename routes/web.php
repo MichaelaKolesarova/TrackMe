@@ -45,6 +45,7 @@ Route::get('/deleteTask/{id}', [TaskController::class, 'deleteTask'])->name('del
 
 //update on obverview
 Route::post('/updateOnlyStatus', [TaskController::class, 'updateTaskStatus'])->name('updateOnlyStatus');
+Route::post('/updateOnlyPriority', [TaskController::class, 'updateTaskPriority'])->name('updateOnlyPriority');
 Route::post('/updateOnlyAssignee', [TaskController::class, 'updateAssignee'])->name('updateOnlyAssignee');
 
 //comments

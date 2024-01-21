@@ -78,6 +78,21 @@
                                 </div>
                             </div>
 
+                            <div class="row mb-3">
+                                <label for="is_team_lead" class="col-md-4 col-form-label text-md-end">{{ __('Team Lead') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="is_team_lead" type="checkbox" class="form-check-input" name="is_team_lead" value="1"
+                                        {{ old('is_team_lead') ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="is_team_lead">{{ __('I am a Team Lead') }}</label>
+
+                                    @error('is_team_lead')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                    @enderror
+                                </div>
+                            </div>
+
+
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">

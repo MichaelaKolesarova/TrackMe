@@ -1,4 +1,4 @@
-@php use App\Helpers\DataStructures\TaskStatusEnum;use App\Models\Comment;use App\Models\User; @endphp
+@php use App\Helpers\DataStructures\PriorityEnum;use App\Helpers\DataStructures\TaskStatusEnum;use App\Models\Comment;use App\Models\User; @endphp
 @extends('layouts.base')
 
 @section('content')
@@ -9,7 +9,7 @@
                 <div class="col d-flex align-items-center" style="padding-right: 50px">
                     <h1 class="fw-bolder small-margin"><span class="text-gradient d-inline">{{$task->title}}</span></h1>
 
-                    @if(auth()->id() == $task->assignee)
+                    @if(auth()->id() == $task->assignee || auth()->user()->is_team_lead)
                         <form action="{{ route('deleteTask', ['id' => $task->id]) }}" method="get" class=" ms-auto">
                             @csrf
                             <button type="submit" class="btn btn-danger">
@@ -24,14 +24,17 @@
 
                 <h5 class="small-margin fs-3 text-muted"> ID: <span style="color: #1a1e21">{{$task->id}} </span></h5>
 
-                <div class="col small-margin">
+                <div class="col small-margin scrollable">
 
                     <h5 class="fs-3 text-muted"> Description:</h5>
                     <p class="margin-between-sections "><span style="color: #1a1e21">{{$task->description}}</span></p>
 
 
                     <h5 class="fs-3 text-muted"> Comments:</h5>
-                    <div class="mb-1" id="comments-container">
+                    <div class="mb-1" id="comments-container ">
+                        <div>
+
+                        </div>
 
                         @foreach(Comment::orderBy('created_at')->where('task_id', '=', $task->id)->get() as $comment)
                             <div class="be-comment-block">
@@ -77,6 +80,7 @@
                 </div>
 
                 <div class="col-3 small-margin ml-auto">
+
                     <p>status: </p>
 
                     <div class="dropdown margin-between-sections">
@@ -96,6 +100,33 @@
                                             <a class="dropdown-item" href="#"
                                                onclick="document.getElementById('updateStatusForm-{{ $status }}').submit(); return false;">
                                                 {{ TaskStatusEnum::toString($status) }}
+                                            </a>
+                                        </form>
+                                    </li>
+                                @endif
+                            @endforeach
+                        </ul>
+                    </div>
+
+                    <p>priority: </p>
+
+                    <div class="dropdown margin-between-sections">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            {{ PriorityEnum::toString(PriorityEnum::from($task->priority)) }}
+                        </button>
+                        <ul class="dropdown-menu">
+                            @foreach(PriorityEnum::cases() as $status)
+                                @if($status != PriorityEnum::from($task->priority))
+                                    <li>
+                                        <form id="updatePriorityForm-{{ $status }}" method="post"
+                                              action="{{ route('updateOnlyPriority') }}">
+                                            @csrf
+                                            <input type="hidden" name="taskId" value="{{ $task->id }}">
+                                            <input type="hidden" name="newStatus" value="{{ $status }}">
+                                            <a class="dropdown-item" href="#"
+                                               onclick="document.getElementById('updatePriorityForm-{{ $status }}').submit(); return false;">
+                                                {{ PriorityEnum::toString($status) }}
                                             </a>
                                         </form>
                                     </li>
@@ -173,20 +204,6 @@
                             {{$task->authoredBy->name}}
                         </div>
                     </div>
-
-                    <p>Labels: </p>
-                    <!--
-                    <div class="d-flex align-items-start margin-between-sections">
-                        <i class="bi bi-tags"></i>
-                        <div class="flex-grow-1 ml-3 person-text small-margin">
-                            urgent
-                        </div>
-                        <i class="bi bi-tags"></i>
-                        <div class="flex-grow-1 ml-3 person-text small-margin">
-                            admin
-                        </div>
-                    </div>
-                    -->
                 </div>
             </div>
         </div>

@@ -22,9 +22,8 @@ class TaskController extends Controller
         if( $inputFields['assignee'] == 0){
             $inputFields['assignee'] = null;
         }
-        $inputFields['title'] = strip_tags($inputFields['title']);
+        $inputFields['title'] = strip_tags($inputFields['title']); //html tags
         $inputFields['description'] = strip_tags($inputFields['description']);
-        //$inputFields['taskStatus'] = TaskStatusEnum::ToDo;
         $inputFields['author'] = auth()->id();
 
         Task::create($inputFields);
@@ -71,6 +70,25 @@ class TaskController extends Controller
             return response()->json(['error' => 'Task not found'], 404);
         }
         $task->taskStatus = $inputFields['newStatus'];
+        $task->save();
+
+        return redirect()->back()->with(['success' => 'Task updated successfully']);
+
+    }
+
+    public function updateTaskPriority(Request $request)
+    {
+
+        $inputFields = $request->validate([
+            'taskId' => 'required',
+            'newStatus' => 'required'
+        ]);
+
+        $task = Task::find($inputFields['taskId']);
+        if (!$task) {
+            return response()->json(['error' => 'Task not found'], 404);
+        }
+        $task->priority = $inputFields['newStatus'];
         $task->save();
 
         return redirect()->back()->with(['success' => 'Task updated successfully']);
