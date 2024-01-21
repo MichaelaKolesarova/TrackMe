@@ -15,7 +15,8 @@
     </div>
     <div style="margin: 50px"></div>
 
-    <div id="tasks_container" class="col fill-width small-margin">
+    <div id="tasks_container" class="col fill-width small-margin scrollable">
+
         <div class="row justify-content-around">
             <div class="col-sm-12 col-md-6 col-lg-3 mb-4">
                 <div class="card tasks-card">

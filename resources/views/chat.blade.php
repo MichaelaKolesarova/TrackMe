@@ -16,63 +16,67 @@
                 <h1 class="col fw-bolder small-margin"><span class="text-gradient d-inline ">{{$user->name}}</span></h1>
 
                 <div class="mb-1" id="comments-container">
+                    <div id="scrollable" class="scrollable">
 
-
-                    @foreach(Message::orderBy('created_at')
-                            ->where(function ($query) use ($user) {
-                                $query->where('from', auth()->id())->where('to', $user->id);
-                            })
-                            ->orWhere(function ($query) use ($user) {
-                                $query->where('from', $user->id)->where('to', auth()->id());
-                            })
-                            ->get() as $message)
-                        @if($message->from == auth()->id())
-                            <div class="be-comment-block">
-                                <div class="be-img-comment-right">
-                                    <div class="col rounded-circle bg-primary text-white mr-1"
-                                         style="width: 45px; height: 45px; line-height: 45px; text-align: center; font-size: 30px;">
-                                        {{ strtoupper(substr($message->authoredBy->name, 0, 1)) }}
-                                    </div>
-                                </div>
-
-
-                                <div class="be-comment">
-                                    <div class="be-comment-content-right">
-                                        <span class="be-comment-time be-comment-time-left"><i class="bi bi-clock"></i>{{$message->created_at}}</span>
-                                        <span ><p style="font-size: 15px; margin-bottom: 5px; text-align: right"> {{$message->authoredBy->name}} </p></span>
-
-
-                                        <p class="be-comment-text" style="font-size: 20px;">
-                                            {{$message->content}}
-                                        </p>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        @else
-
-                            <div class="be-comment-block">
-                                <div class="be-comment">
-                                    <div class="be-img-comment">
-                                        <div class="col rounded-circle bg-primary text-white "
+                        @foreach(Message::orderBy('created_at')
+                           ->where(function ($query) use ($user) {
+                               $query->where('from', auth()->id())->where('to', $user->id);
+                           })
+                           ->orWhere(function ($query) use ($user) {
+                               $query->where('from', $user->id)->where('to', auth()->id());
+                           })
+                           ->get() as $message)
+                            @if($message->from == auth()->id())
+                                <div class="be-comment-block">
+                                    <div class="be-img-comment-right">
+                                        <div class="col rounded-circle bg-primary text-white mr-1"
                                              style="width: 45px; height: 45px; line-height: 45px; text-align: center; font-size: 30px;">
                                             {{ strtoupper(substr($message->authoredBy->name, 0, 1)) }}
                                         </div>
                                     </div>
 
-                                    <div class="be-comment-content">
-                                        <span><p style="font-size: 15px; margin-bottom: 5px;"> {{$message->authoredBy->name}} </p></span>
-                                        <span class="be-comment-time be-comment-time-right"><i class="bi bi-clock"></i>{{$message->created_at}}</span>
 
-                                        <p class="be-comment-text" style="font-size: 20px;">
-                                            {{$message->content}}
-                                        </p>
+                                    <div class="be-comment">
+                                        <div class="be-comment-content-right">
+                                            <span class="be-comment-time be-comment-time-left"><i class="bi bi-clock"></i>{{$message->created_at}}</span>
+                                            <span ><p style="font-size: 15px; margin-bottom: 5px; text-align: right"> {{$message->authoredBy->name}} </p></span>
+
+
+                                            <p class="be-comment-text" style="font-size: 20px;">
+                                                {{$message->content}}
+                                            </p>
+                                        </div>
+
                                     </div>
                                 </div>
-                            </div>
-                        @endif
-                    @endforeach
+
+                            @else
+
+                                <div class="be-comment-block">
+                                    <div class="be-comment">
+                                        <div class="be-img-comment">
+                                            <div class="col rounded-circle bg-primary text-white "
+                                                 style="width: 45px; height: 45px; line-height: 45px; text-align: center; font-size: 30px;">
+                                                {{ strtoupper(substr($message->authoredBy->name, 0, 1)) }}
+                                            </div>
+                                        </div>
+
+                                        <div class="be-comment-content">
+                                            <span><p style="font-size: 15px; margin-bottom: 5px;"> {{$message->authoredBy->name}} </p></span>
+                                            <span class="be-comment-time be-comment-time-right"><i class="bi bi-clock"></i>{{$message->created_at}}</span>
+
+                                            <p class="be-comment-text" style="font-size: 20px;">
+                                                {{$message->content}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+
+                    </div>
+
+
 
 
                     <form class="form-block be-comment-block " action="{{ route('create.message') }}" method="post">
@@ -98,5 +102,9 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('scrollable').scrollTop = document.getElementById('scrollable').scrollHeight;
+    </script>
 
 @endsection
