@@ -1,4 +1,4 @@
-# Bakalárka To-do List
+#  To-do List
 
 ## Must have:
 - [ ] Teamy a ich hierarchia
