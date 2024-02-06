@@ -50,6 +50,8 @@ Route::post('/updateOnlyAssignee', [TaskController::class, 'updateAssignee'])->n
 
 //comments
 Route::post('/create-comment', [CommentController::class, 'createComment'])->name('create.comment');
+Route::get('/deleteComment/{id}', [CommentController::class, 'deleteComment'])->name('deleteComment');
+Route::post('/editComment', [CommentController::class, 'editComment'])->name('editComment');
 
 //messages
 Route::get('/openChat/{userId}', [MessageController::class, 'openChat'])->name('openChat');

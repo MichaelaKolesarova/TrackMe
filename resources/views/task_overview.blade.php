@@ -49,7 +49,21 @@
                                     <div class="be-comment-content">
                                         <div class="flex-grow-1 ml-3 person-text small-margin"></div>
                                         <span><p style="font-size: 25px"> {{$comment->authoredBy->name}} </p></span>
-                                        <span class="be-comment-time"><i class="bi bi-clock"></i>{{$comment->created_at}}</span>
+                                        <span class="be-comment-time right">
+                                            @if($comment->authoredBy->id == auth()->id())
+                                                <div class="dropdown right" style="display: inline-block;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical dropdown-toggle" role="button" id="dropdownMenuLink_{{$comment->id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" viewBox="0 0 16 16">
+                                                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                                    </svg>
+
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink_{{$comment->id}}">
+                                                       <li><a class="dropdown-item" onclick="setEditingComment({{$comment->id}}, '{{$comment->content}}')">Edit</a></li>
+                                                        <li><a class="dropdown-item" href="{{ route('deleteComment', ['id' => $comment->id]) }}">Delete</a></li>
+                                                    </ul>
+                                                </div>
+                                            @endif
+                                            <i class="bi bi-clock"></i>{{$comment->created_at}}
+                                        </span>
 
                                         <p class="be-comment-text">
                                             {{$comment->content}}
@@ -62,13 +76,27 @@
                     </div>
 
 
-                    <form class="form-block be-comment-block" action="{{ route('create.comment') }}" method="post">
+                    <form id="editCommentForm" class="form-block be-comment-block " action="{{ route('editComment') }}" method="post" style="display: none;">
                         @csrf
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
-                                    <textarea class="form-input" name="content" required=""
-                                              placeholder="Your text"></textarea>
+                                    <textarea id="editCommentContent" class="form-input" name="content" required="" placeholder="Edit your message"></textarea>
+                                    <input id="commentIdInput" type="hidden" name="id" value="">
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <button type="submit" class="btn btn-primary pull-right">Update</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <form id="createCommentForm" class="form-block be-comment-block" action="{{ route('create.comment') }}" method="post">
+                        @csrf
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <textarea class="form-input" name="content" required="" placeholder="Your text"></textarea>
                                     <input type="hidden" name="task_id" value="{{ $task->id }}">
                                 </div>
                             </div>
@@ -208,5 +236,16 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('scrollable').scrollTop = document.getElementById('scrollable').scrollHeight;
+
+        function setEditingComment(commentId, commentContent) {
+            $('#editCommentContent').val(commentContent);
+            $('#commentIdInput').val(commentId);
+            $('#createCommentForm').hide();
+            $('#editCommentForm').show();
+        }
+    </script>
 
 @endsection

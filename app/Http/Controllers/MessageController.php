@@ -73,8 +73,5 @@ class MessageController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Not fount the message');
         }
-
-
-
     }
 }
