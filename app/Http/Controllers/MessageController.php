@@ -37,4 +37,19 @@ class MessageController extends Controller
         Message::create($inputFields);
         return redirect()->back()->with('success', 'Message created successfully');
     }
+
+    public function deleteMessage($id)
+    {
+        try {
+            $message = Message::findOrFail($id);
+            if ($message->from == auth()->id()) {
+                $message->delete();
+                return redirect()->back()->with('success', 'Message deleted successfully.');
+            } else {
+                return redirect()->back()->with('error', 'You are not authorized to delete this message.');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to delete the message.');
+        }
+    }
 }
