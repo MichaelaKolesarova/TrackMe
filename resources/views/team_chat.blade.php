@@ -28,7 +28,20 @@
 
                                     <div class="be-comment">
                                         <div class="be-comment-content-right">
-                                            <span class="be-comment-time be-comment-time-left"><i class="bi bi-clock"></i>{{$message->created_at}}</span>
+                                            <span class="be-comment-time be-comment-time-left">
+                                                <i class="bi bi-clock"></i>{{$message->created_at}}
+                                                <div class="dropdown right" style="display: inline-block;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical dropdown-toggle" role="button" id="dropdownMenuLink_{{$message->id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" viewBox="0 0 16 16">
+                                                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                                    </svg>
+
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink_{{$message->id}}">
+                                                       <li><a class="dropdown-item" onclick="setEditingMessage({{$message->id}}, '{{$message->content}}')">Edit</a></li>
+                                                        <li><a class="dropdown-item" href="{{ route('deleteMessage', ['id' => $message->id]) }}">Delete</a></li>
+                                                    </ul>
+                                                </div>
+
+                                            </span>
                                             <span ><p style="font-size: 15px; margin-bottom: 5px; text-align: right"> {{$message->authoredBy->name}} </p></span>
 
 
@@ -68,8 +81,23 @@
 
 
 
+                    <form id="editMessageForm" class="form-block be-comment-block " action="{{ route('editMessage') }}" method="post" style="display: none;">
+                        @csrf
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <textarea id="editMessageContent" class="form-input" name="content" required="" placeholder="Edit your message"></textarea>
+                                    <input id="messageIdInput" type="hidden" name="id" value="">
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <button type="submit" class="btn btn-primary pull-right">Update</button>
+                            </div>
+                        </div>
+                    </form>
 
-                    <form class="form-block be-comment-block" action="{{ route('create.message') }}" method="post">
+
+                    <form id="createMessageForm" class="form-block be-comment-block" action="{{ route('create.message') }}" method="post">
                             @csrf
                             <div class="row">
                                 <div class="col-xs-12">
@@ -95,6 +123,13 @@
 
     <script>
         document.getElementById('scrollable').scrollTop = document.getElementById('scrollable').scrollHeight;
+
+        function setEditingMessage(messageId, messageContent) {
+            $('#editMessageContent').val(messageContent);
+            $('#messageIdInput').val(messageId);
+            $('#createMessageForm').hide();
+            $('#editMessageForm').show();
+        }
     </script>
 
 @endsection
