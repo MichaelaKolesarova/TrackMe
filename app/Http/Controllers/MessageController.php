@@ -52,4 +52,20 @@ class MessageController extends Controller
             return redirect()->back()->with('error', 'Failed to delete the message.');
         }
     }
+
+    public function editMessage(Request $request, $id)
+    {
+        $message = Message::findOrFail($id);
+        if (auth()->id() !== $message->from) {
+            return redirect()->back()->with('error', 'You are not authorized to edit this message');
+        }
+        $request->validate([
+            'content' => 'required|string',
+        ]);
+
+        $message->content = $request->input('content');
+        $message->save();
+
+        return redirect()->back()->with('success', 'Message updated successfully');
+    }
 }

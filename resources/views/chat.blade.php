@@ -9,6 +9,10 @@
 @extends('layouts.base')
 
 @section('content')
+    @php
+        $editingMessage = false;
+    @endphp
+
 
     <div class="container-fluid small-margin">
         <div class="col ">
@@ -46,7 +50,7 @@
                                                     </svg>
 
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink_{{$message->id}}">
-                                                        <li><a class="dropdown-item" href="/editMessage/{{$message->id}}">Edit</a></li>
+                                                       <li><a class="dropdown-item" onclick="setEditingMessage()">Edit</a></li>
                                                         <li><a class="dropdown-item" href="{{ route('deleteMessage', ['id' => $message->id]) }}">Delete</a></li>
                                                     </ul>
                                                 </div>
@@ -86,28 +90,38 @@
                                 </div>
                             @endif
                         @endforeach
-
                     </div>
 
-
-
-
-                    <form class="form-block be-comment-block " action="{{ route('create.message') }}" method="post">
-                            @csrf
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="form-group">
-                                    <textarea class="form-input" name="content" required=""
-                                              placeholder="Your text"></textarea>
-                                        <input type="hidden" name="to" value="{{ $user->id }}">
-                                    </div>
-                                </div>
-                                <div class="col-xs-12">
-                                    <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                    <form id="editMessageForm" class="form-block be-comment-block " action="{{ route('editMessage', ['id' => $message->id]) }}" method="post" style="display: none;">
+                        @csrf
+                        @method('PUT')
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <textarea class="form-input" name="content" required="" placeholder="Edit your message">{{ $message->content }}</textarea>
+                                    <input type="hidden" name="to" value="{{ $message->to }}">
                                 </div>
                             </div>
+                            <div class="col-xs-12">
+                                <button type="submit" class="btn btn-primary pull-right">Update</button>
+                            </div>
+                        </div>
                     </form>
 
+                    <form id="createMessageForm" class="form-block be-comment-block " action="{{ route('create.message') }}" method="post">
+                        @csrf
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <textarea class="form-input" name="content" required="" placeholder="Your text"></textarea>
+                                    <input type="hidden" name="to" value="{{ $user->id }}">
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                            </div>
+                        </div>
+                    </form>
 
                 </div>
 
@@ -119,5 +133,12 @@
     <script>
         document.getElementById('scrollable').scrollTop = document.getElementById('scrollable').scrollHeight;
     </script>
+    <script>
+        function setEditingMessage(messageId) {
+            $('#createMessageForm').hide();
+            $('#editMessageForm').show();
+        }
+    </script>
+
 
 @endsection
