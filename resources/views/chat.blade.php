@@ -50,7 +50,7 @@
                                                     </svg>
 
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink_{{$message->id}}">
-                                                       <li><a class="dropdown-item" onclick="setEditingMessage()">Edit</a></li>
+                                                       <li><a class="dropdown-item" onclick="setEditingMessage({{$message->id}}, '{{$message->content}}')">Edit</a></li>
                                                         <li><a class="dropdown-item" href="{{ route('deleteMessage', ['id' => $message->id]) }}">Delete</a></li>
                                                     </ul>
                                                 </div>
@@ -92,14 +92,13 @@
                         @endforeach
                     </div>
 
-                    <form id="editMessageForm" class="form-block be-comment-block " action="{{ route('editMessage', ['id' => $message->id]) }}" method="post" style="display: none;">
+                    <form id="editMessageForm" class="form-block be-comment-block " action="{{ route('editMessage') }}" method="post" style="display: none;">
                         @csrf
-                        @method('PUT')
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
-                                    <textarea class="form-input" name="content" required="" placeholder="Edit your message">{{ $message->content }}</textarea>
-                                    <input type="hidden" name="to" value="{{ $message->to }}">
+                                    <textarea id="editMessageContent" class="form-input" name="content" required="" placeholder="Edit your message"></textarea>
+                                    <input id="messageIdInput" type="hidden" name="id" value="">
                                 </div>
                             </div>
                             <div class="col-xs-12">
@@ -132,13 +131,14 @@
 
     <script>
         document.getElementById('scrollable').scrollTop = document.getElementById('scrollable').scrollHeight;
-    </script>
-    <script>
-        function setEditingMessage(messageId) {
+
+        function setEditingMessage(messageId, messageContent) {
+            $('#editMessageContent').val(messageContent);
+            $('#messageIdInput').val(messageId);
+            //$('#editMessageForm input[name="id"]').val(messageId);
             $('#createMessageForm').hide();
             $('#editMessageForm').show();
         }
     </script>
-
 
 @endsection

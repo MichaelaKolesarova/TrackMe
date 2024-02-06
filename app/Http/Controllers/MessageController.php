@@ -53,19 +53,28 @@ class MessageController extends Controller
         }
     }
 
-    public function editMessage(Request $request, $id)
+    public function editMessage(Request $request)
     {
-        $message = Message::findOrFail($id);
-        if (auth()->id() !== $message->from) {
-            return redirect()->back()->with('error', 'You are not authorized to edit this message');
+        $id = $request['id'];
+        try {
+            $message = Message::findOrFail($id);
+            if (auth()->id() !== $message->from) {
+                return redirect()->back()->with('error', 'You are not authorized to edit this message');
+            }
+
+            $request->validate([
+                'content' => 'required|string',
+            ]);
+
+            $message->content = $request->input('content');
+            $message->save();
+
+            return redirect()->back()->with('success', 'Message updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Not fount the message');
         }
-        $request->validate([
-            'content' => 'required|string',
-        ]);
 
-        $message->content = $request->input('content');
-        $message->save();
 
-        return redirect()->back()->with('success', 'Message updated successfully');
+
     }
 }

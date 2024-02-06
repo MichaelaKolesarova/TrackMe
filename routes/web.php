@@ -57,7 +57,7 @@ Route::get('/openTeamChat/', [MessageController::class, 'openTeamChat'])->name('
 Route::post('/create-message', [MessageController::class, 'createMessage'])->name('create.message');
 
 Route::get('/deleteMessage/{id}', [MessageController::class, 'deleteMessage'])->name('deleteMessage');
-Route::put('/editMessage/{id}', [MessageController::class, 'editMessage'])->name('editMessage');
+Route::post('/editMessage', [MessageController::class, 'editMessage'])->name('editMessage');
 
 
 
