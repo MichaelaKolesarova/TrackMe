@@ -145,10 +145,12 @@
 
                 </div>
             </div>
-            <div class="sb-sidenav-footer">
-                <div class="small">Logged in as:</div>
-                {{auth()->user()->name}}
-            </div>
+            <a href="{{ route('profile') }}" style="text-decoration: none; color: inherit">
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    {{ auth()->user()->name }}
+                </div>
+            </a>
         </nav>
     </div>
 

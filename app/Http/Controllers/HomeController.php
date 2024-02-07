@@ -30,4 +30,9 @@ class HomeController extends Controller
     {
         return view('team_dashboard');
     }
+
+    public function profile()
+    {
+        return view('profile');
+    }
 }

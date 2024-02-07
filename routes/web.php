@@ -33,6 +33,7 @@ Auth::routes();
 //dashboards
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home_team', [App\Http\Controllers\HomeController::class, 'team'])->name('home_team');
+Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
 
 
 //TaskRelatedRoutes
