@@ -40,9 +40,21 @@
                             <div class="be-comment-block">
                                 <div class="be-comment">
                                     <div class="be-img-comment">
-                                        <div class="col rounded-circle bg-primary text-white mr-1"
+                                        <div class="col rounded-circle text-white mr-1"
                                              style="width: 45px; height: 45px; line-height: 45px; text-align: center; font-size: 30px;">
-                                            {{ strtoupper(substr($comment->authoredBy->name, 0, 1)) }}
+                                            @if($comment->authoredBy->profile_picture == null)
+                                                <div class="col rounded-circle bg-primary text-white mr-1"
+                                                     style="width: 45px; height: 45px; line-height: 45px; text-align: center; font-size: 30px;">
+                                                    {{ strtoupper(substr($comment->authoredBy->name, 0, 1)) }}
+                                                </div>
+                                            @else
+                                                <div class="col mr-1">
+                                                    <img src="data:image/jpeg;base64,{{ base64_encode($comment->authoredBy->profile_picture) }}"
+                                                         class="rounded-circle"
+                                                         alt="Profile Picture"
+                                                         style="width: 55px; height: 55px; object-fit: cover;">
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -166,19 +178,34 @@
 
                     <p>Assignee: </p>
                     <div class="d-flex align-items-start margin-between-sections">
-                        <div class="dropdown">
-                            <div class="row">
-                                <div class="col rounded-circle bg-primary text-white mr-1"
+                        <div class="dropdown d-flex align-items-center">
+                        <div class="row">
+                                <div class="col rounded-circle text-white mr-1"
                                      style="width: 35px; height: 35px; line-height: 35px; text-align: center; font-size: 18px;">
                                     @if ($task->assignedTo)
-                                        {{ strtoupper(substr($task->assignedTo->name, 0, 1)) }}
+                                        @if($task->assignedTo->profile_picture == null)
+                                            <div class="col rounded-circle bg-primary text-white mr-1"
+                                                 style="width: 45px; height: 45px; line-height: 45px; text-align: center; font-size: 30px;">
+                                                {{ strtoupper(substr($task->assignedTo->name, 0, 1)) }}
+                                            </div>
+                                        @else
+                                            <div class="col">
+                                                <img src="data:image/jpeg;base64,{{ base64_encode($task->assignedTo->profile_picture) }}"
+                                                     class="rounded-circle"
+                                                     alt="Profile Picture"
+                                                     style="width: 45px; height: 45px; object-fit: cover;">
+                                            </div>
+                                        @endif
                                     @else
-                                        U
+                                        <div class="col rounded-circle bg-primary text-white mr-1"
+                                             style="width: 45px; height: 45px; line-height: 45px; text-align: center; font-size: 30px;">
+                                           U
+                                        </div>
                                     @endif
                                 </div>
                                 <button class="col btn btn-secondary bg-white dropdown-toggle" type="button"
                                         id="assigneeDropdown" data-bs-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false" style="margin-left: 10px">
+                                        aria-expanded="false" style="margin-left: 25px">
 
                                     @if ($task->assignedTo)
                                         {{ $task->assignedTo->name}}
@@ -224,9 +251,22 @@
 
                     <p>Author: </p>
                     <div class="d-flex align-items-start margin-between-sections">
-                        <div class="rounded-circle bg-primary text-white mr-1"
+                        <div class="rounded-circle text-white mr-1"
                              style="width: 35px; height: 35px; line-height: 35px; text-align: center; font-size: 18px;">
-                            {{ strtoupper(substr($task->authoredBy->name, 0, 1)) }}
+                            @if($task->authoredBy->profile_picture == null)
+                                <div class="col rounded-circle bg-primary text-white mr-1"
+                                     style="width: 45px; height: 45px; line-height: 45px; text-align: center; font-size: 30px;">
+                                    {{ strtoupper(substr($task->authoredBy->name, 0, 1)) }}
+                                </div>
+                            @else
+                                <div class="col">
+                                    <img src="data:image/jpeg;base64,{{ base64_encode($task->authoredBy->profile_picture) }}"
+                                         class="rounded-circle"
+                                         alt="Profile Picture"
+                                         style="width: 45px; height: 45px; object-fit: cover;">
+                                </div>
+                            @endif
+
                         </div>
                         <div class="flex-grow-1 ml-3 person-text small-margin">
                             {{$task->authoredBy->name}}

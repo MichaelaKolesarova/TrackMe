@@ -19,10 +19,19 @@
                             @if($message->from == auth()->id())
                                 <div class="be-comment-block">
                                     <div class="be-img-comment-right">
-                                        <div class="col rounded-circle bg-primary text-white mr-1"
-                                             style="width: 45px; height: 45px; line-height: 45px; text-align: center; font-size: 30px;">
-                                            {{ strtoupper(substr($message->authoredBy->name, 0, 1)) }}
-                                        </div>
+                                        @if($message->authoredBy->profile_picture == null)
+                                            <div class="col rounded-circle bg-primary text-white mr-1"
+                                                 style="width: 45px; height: 45px; line-height: 45px; text-align: center; font-size: 30px;">
+                                                {{ strtoupper(substr($message->authoredBy->name, 0, 1)) }}
+                                            </div>
+                                        @else
+                                            <div class="col">
+                                                <img src="data:image/jpeg;base64,{{ base64_encode($message->authoredBy->profile_picture) }}"
+                                                     class="rounded-circle"
+                                                     alt="Profile Picture"
+                                                     style="width: 45px; height: 45px; object-fit: cover;">
+                                            </div>
+                                        @endif
                                     </div>
 
 
@@ -58,10 +67,19 @@
                                 <div class="be-comment-block">
                                     <div class="be-comment">
                                         <div class="be-img-comment">
-                                            <div class="col rounded-circle bg-primary text-white "
-                                                 style="width: 45px; height: 45px; line-height: 45px; text-align: center; font-size: 30px;">
-                                                {{ strtoupper(substr($message->authoredBy->name, 0, 1)) }}
-                                            </div>
+                                            @if($message->authoredBy->profile_picture == null)
+                                                <div class="col rounded-circle bg-primary text-white mr-1"
+                                                     style="width: 45px; height: 45px; line-height: 45px; text-align: center; font-size: 30px;">
+                                                    {{ strtoupper(substr($message->authoredBy->name, 0, 1)) }}
+                                                </div>
+                                            @else
+                                                <div class="col">
+                                                    <img src="data:image/jpeg;base64,{{ base64_encode($message->authoredBy->profile_picture) }}"
+                                                         class="rounded-circle"
+                                                         alt="Profile Picture"
+                                                         style="width: 45px; height: 45px; object-fit: cover;">
+                                                </div>
+                                            @endif
                                         </div>
 
                                         <div class="be-comment-content">
