@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('phone_number')->default(null)->nullable();
             $table->string('street')->default(null)->nullable();
             $table->string('house_number')->default(null)->nullable();
-            $table->integer('postcode')->default(null)->nullable();
+            $table->string('postcode')->default(null)->nullable();
             $table->string('city')->default(null)->nullable();
             $table->date('birthday')->default(null)->nullable();
         });

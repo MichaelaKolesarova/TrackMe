@@ -27,6 +27,9 @@ Route::get('/', function () {
 Route::post('/register', [UserController::class, "register"]);
 Route::post('/login', [UserController::class, "login"]);
 Route::post('/logout', [UserController::class, "logout"]);
+Route::post('/updateProfile', [UserController::class, 'updateProfile'])->name('updateProfile');
+Route::post('/updatePicture', [UserController::class, 'updatePicture'])->name('updatePicture');
+Route::delete('/deletePicture', [UserController::class, 'deletePicture'])->name('deletePicture');
 
 Auth::routes();
 
