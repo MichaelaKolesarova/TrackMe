@@ -1,9 +1,6 @@
 @php
     use App\Models\User;
     use App\Models\Message;
-
-
-
 @endphp
 
 @extends('layouts.base')
@@ -13,6 +10,8 @@
         $editingMessage = false;
     @endphp
 
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
     <div class="container-fluid small-margin">
         <div class="col ">
@@ -127,7 +126,7 @@
                         </div>
                     </form>
 
-                    <form id="createMessageForm" class="form-block be-comment-block " action="{{ route('create.message') }}" method="post">
+                    <form id="createMessageForm" class="form-block be-comment-block " >
                         @csrf
                         <div class="row">
                             <div class="col-xs-12">
@@ -158,6 +157,55 @@
             $('#createMessageForm').hide();
             $('#editMessageForm').show();
         }
+    </script>
+
+    <script>
+        @php
+            $userId = $user->id;
+        @endphp
+        const pusher  = new Pusher('{{config('broadcasting.connections.pusher.key')}}', {cluster: 'eu'});
+        const channel = pusher.subscribe('user.{{$user->id}}');
+
+        //Receive messages
+
+        channel.bind('private-chat.{{auth()->id()}}', function (data) {
+            $.post("/receive", {
+                _token:  '{{csrf_token()}}',
+                id: data.id,
+            })
+                .then(function (res) {
+                    $("#messages").append(res);
+                    document.getElementById('scrollable').scrollTop = document.getElementById('scrollable').scrollHeight;
+                });
+        });
+
+
+
+        $("#createMessageForm").submit(function (event) {
+            event.preventDefault();
+
+            //TODO submit on enter
+            $.ajax({
+                url:     "/create-message",
+                method:  'POST',
+                headers: {
+                    'X-Socket-Id': pusher.connection.socket_id
+                },
+                data:    {
+                    _token:  '{{csrf_token()}}',
+                    content: $("#createMessageForm textarea[name='content']").val(),
+                    to: $("#createMessageForm input[name='to']").val(),
+                }
+            }).done(function (res) {
+                $("#messages").append(res);
+                $("#createMessageForm textarea[name='content']").val('');
+                document.getElementById('scrollable').scrollTop = document.getElementById('scrollable').scrollHeight;
+
+            });
+
+        })
+
+
     </script>
 
 @endsection

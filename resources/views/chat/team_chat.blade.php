@@ -120,7 +120,7 @@
                     </form>
 
 
-                    <form id="createMessageForm" class="form-block be-comment-block" action="{{ route('create.message') }}" method="post">
+                    <form id="createMessageForm" class="form-block be-comment-block" >
                             @csrf
                             <div class="row">
                                 <div class="col-xs-12">

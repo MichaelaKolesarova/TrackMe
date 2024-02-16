@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\PusherBroadcast;
+use App\Events\PrivateMessageBroadcast;
+use App\Events\TeamMessageBroadcast;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -35,7 +36,11 @@ class MessageController extends Controller
         $inputFields['from'] = auth()->id();
 
         $message = Message::create($inputFields);
-        broadcast(new PusherBroadcast($message->id))->toOthers();
+        if ( $message->to == 0 ) {
+            broadcast(new TeamMessageBroadcast($message->id))->toOthers();
+        } else {
+            broadcast(new PrivateMessageBroadcast($message->id, $message->from, $message->to));
+        }
         return view('chat/broadcast', ['message' => $message])->with('success', 'Message created successfully.');
     }
 
