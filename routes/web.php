@@ -61,6 +61,8 @@ Route::post('/editComment', [CommentController::class, 'editComment'])->name('ed
 Route::get('/openChat/{userId}', [MessageController::class, 'openChat'])->name('openChat');
 Route::get('/openTeamChat/', [MessageController::class, 'openTeamChat'])->name('openTeamChat');
 Route::post('/create-message', [MessageController::class, 'createMessage'])->name('create.message');
+Route::post('/receive', [MessageController::class, 'receive'])->name('receive');
+
 
 Route::get('/deleteMessage/{id}', [MessageController::class, 'deleteMessage'])->name('deleteMessage');
 Route::post('/editMessage', [MessageController::class, 'editMessage'])->name('editMessage');
