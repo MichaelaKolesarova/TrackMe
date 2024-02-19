@@ -1,4 +1,4 @@
-@php use App\Helpers\DataStructures\PriorityEnum;use App\Helpers\DataStructures\TaskStatusEnum;use App\Models\User; @endphp
+@php use App\Helpers\DataStructures\PriorityEnum;use App\Helpers\DataStructures\TaskStatusEnum;use App\Models\Project;use App\Models\Task;use App\Models\User; @endphp
 
 <div class="modal fade" id="ModalCreate" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel"
      aria-hidden="true">
@@ -25,6 +25,31 @@
                     <div class="form-group">
                         <label for="description">Task Description:</label>
                         <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="project">Project:</label>
+                        <select class="form-control" id="project" name="project" required>
+                            <option value="">Select belonging project</option>
+                            @foreach(Project::all() as $project)
+                                <option value="{{ $project->id }}">{{ $project->project_name }}</option>
+                            @endforeach
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a project.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="parent_task">Parent task:</label>
+                        <select class="form-control" id="parent_task" name="parent_task" required>
+                            <option value="">Select parent task</option>
+                            @foreach(Task::all() as $task)
+                                <option value="{{ $task->id }}">{{ $task->title }}</option>
+                            @endforeach
+                            <option value="0">New branch of project tasks</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a parent task.
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="assignee_id">Assignee:</label>
@@ -62,31 +87,30 @@
                     <button class="btn btn-primary small-margin">Submit</button>
                 </form>
 
-            <script>
-                function validateForm() {
-                    var title = document.getElementById('title');
-                    var description = document.getElementById('description');
-                    var dueDate = document.getElementById('due_date');
+                <script>
+                    function validateForm() {
+                        var title = document.getElementById('title');
+                        var description = document.getElementById('description');
+                        var dueDate = document.getElementById('due_date');
 
-                    if (!title.value.trim()  || !description.value.trim() ) {
-                        alert('Please fill in text into title and description ');
-                        return false;
+                        if (!title.value.trim() || !description.value.trim()) {
+                            alert('Please fill in text into title and description ');
+                            return false;
+                        }
+
+                        var chosenDate = new Date(dueDate.value);
+                        var currentDate = new Date();
+                        currentDate.setHours(0, 0, 0, 0);
+
+                        if (chosenDate < currentDate) {
+                            alert('Due date must be today or later.');
+                            return false;
+                        }
+
+
+                        return true;
                     }
-
-                    var chosenDate = new Date(dueDate.value);
-                    var currentDate = new Date();
-                    currentDate.setHours(0, 0, 0, 0);
-
-                    if (chosenDate < currentDate) {
-                        alert('Due date must be today or later.');
-                        return false;
-                    }
-
-
-
-                    return true;
-                }
-            </script>
+                </script>
 
             </div>
         </div>

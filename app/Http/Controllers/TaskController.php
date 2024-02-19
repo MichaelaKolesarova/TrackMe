@@ -17,17 +17,21 @@ class TaskController extends Controller
             'description' => 'required',
             'assignee' => 'required',
             'dueDate' => 'required',
-            'priority' => 'required'
+            'priority' => 'required',
+            'project' => 'required',
+            'parent_task' => 'nullable|integer',
         ]);
         if( $inputFields['assignee'] == 0){
             $inputFields['assignee'] = null;
         }
+        if (isset($inputFields['parent_task']) && $inputFields['parent_task'] == 0) {
+            $inputFields['parent_task'] = null;
+        }
         $inputFields['title'] = strip_tags($inputFields['title']); //html tags
         $inputFields['description'] = strip_tags($inputFields['description']);
         $inputFields['author'] = auth()->id();
-
         Task::create($inputFields);
-        return redirect('/home');
+        return redirect()->back()->with(['message' => 'Task created successfully']);
 
     }
 
@@ -54,7 +58,7 @@ class TaskController extends Controller
         $task->taskStatus = $request->get('taskStatus');
         $task->save();
 
-        redirect()->back()->with(['message' => 'Task updated successfully']);
+        return redirect()->back()->with(['message' => 'Task updated successfully']);
     }
 
     public function updateTaskStatus(Request $request)

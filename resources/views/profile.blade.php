@@ -131,6 +131,7 @@
     </script>
 
     <script>
+        //TODO upravit velkost profilovej fotky
         document.getElementById('uploadImageButton').addEventListener('click', function () {
             document.getElementById('fileInput').click();
         });

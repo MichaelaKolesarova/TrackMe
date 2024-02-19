@@ -3,22 +3,23 @@
 ## Must have:
 - [ ] Teamy a ich hierarchia
 - [ ] projekty
-- [ ] Úprava údajov používateľa
+- [x] Úprava údajov používateľa (oprav upload fotky)
 - [ ] Tasky
-  - [ ] parent tasks a ich children tasks (môžu byť assigned bud teamu alebo osobám konkrétne)
-  - [ ] progress
-  - [ ] assignee
-  - [ ] autor
+  - [x] parent tasks a ich children tasks (môžu byť assigned bud teamu alebo osobám konkrétne)
+  - [x] progress
+  - [x] assignee viac assignees
+  - [ ] viac assignees
+  - [x] autor
   - [ ] reporter
-  - [ ] komentáre
-  - [ ] ID
+  - [x] komentáre
+  - [x] ID - skus do id zakomponovat T(task)/P(project)/Team/
   - [ ] labels
-  - [ ] projekt ku ktorému je zaradený task
+  - [x] projekt ku ktorému je zaradený task
   - [ ] log úprav tasku
 - [ ] problémy
 - [ ] Dashboardy – s nezaradenými a zaradenými taskami
 - [ ] Úložisko Dokumentov (niečo ako cofluence)
-- [ ] Správy a teamový chaty (možné použiť @ na osoby, teamy, teasky alebo dokumenty)
+- [x] Správy a teamový chaty (možné použiť @ na osoby, teamy, teasky alebo dokumenty)
 - [ ] Video calls/audio calls
 
 ## Nice to have:

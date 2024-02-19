@@ -1,4 +1,4 @@
-@php use App\Helpers\DataStructures\PriorityEnum;use App\Helpers\DataStructures\TaskStatusEnum;use App\Models\Comment;use App\Models\User; @endphp
+@php use App\Helpers\DataStructures\PriorityEnum;use App\Helpers\DataStructures\TaskStatusEnum;use App\Models\Comment;use App\Models\Task;use App\Models\User; @endphp
 @extends('layouts.base')
 
 @section('content')
@@ -29,6 +29,31 @@
                     <h5 class="fs-3 text-muted"> Description:</h5>
                     <p class="margin-between-sections "><span style="color: #1a1e21">{{$task->description}}</span></p>
 
+                    @if($task->parent_task != null)
+                        <h5 class="fs-3 text-muted">Parent task:</h5>
+                        <p class="margin-between-sections ">
+                            <a href="{{ route('task.overview', ['task' => $task->parent_task]) }}">
+                                <span style="color: #1a1e21">{{ $task->parentTask->title }}</span>
+                            </a>
+                        </p>
+                    @else
+                        <h5 class="fs-3 text-muted"> Parent task:</h5>
+                        <p class="margin-between-sections "><span
+                                class="text-gradient">Root task</span></p>
+                    @endif
+
+                    @if($task->childTasks()->count() > 0)
+                        <h5 class="fs-3 text-muted">Child tasks:</h5>
+                    @foreach($task->childTasks as $childtask)
+                            <p class="margin-between-sections ">
+                                <a href="{{ route('task.overview', ['task' => $childtask->id]) }}">
+                                    <span class="text-gradient" >{{ $childtask->title }}</span>
+                                </a>
+                            </p>
+                    @endforeach
+                    @endif
+
+
 
                     <h5 class="fs-3 text-muted"> Comments:</h5>
                     <div class="mb-1" id="comments-container ">
@@ -49,10 +74,11 @@
                                                 </div>
                                             @else
                                                 <div class="col mr-1">
-                                                    <img src="data:image/jpeg;base64,{{ base64_encode($comment->authoredBy->profile_picture) }}"
-                                                         class="rounded-circle"
-                                                         alt="Profile Picture"
-                                                         style="width: 55px; height: 55px; object-fit: cover;">
+                                                    <img
+                                                        src="data:image/jpeg;base64,{{ base64_encode($comment->authoredBy->profile_picture) }}"
+                                                        class="rounded-circle"
+                                                        alt="Profile Picture"
+                                                        style="width: 55px; height: 55px; object-fit: cover;">
                                                 </div>
                                             @endif
                                         </div>
@@ -64,13 +90,21 @@
                                         <span class="be-comment-time right">
                                             @if($comment->authoredBy->id == auth()->id())
                                                 <div class="dropdown right" style="display: inline-block;">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical dropdown-toggle" role="button" id="dropdownMenuLink_{{$comment->id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" viewBox="0 0 16 16">
-                                                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                         fill="currentColor"
+                                                         class="bi bi-three-dots-vertical dropdown-toggle" role="button"
+                                                         id="dropdownMenuLink_{{$comment->id}}" data-toggle="dropdown"
+                                                         aria-haspopup="true" aria-expanded="false" viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
                                                     </svg>
 
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink_{{$comment->id}}">
-                                                       <li><a class="dropdown-item" onclick="setEditingComment({{$comment->id}}, '{{$comment->content}}')">Edit</a></li>
-                                                        <li><a class="dropdown-item" href="{{ route('deleteComment', ['id' => $comment->id]) }}">Delete</a></li>
+                                                    <ul class="dropdown-menu"
+                                                        aria-labelledby="dropdownMenuLink_{{$comment->id}}">
+                                                       <li><a class="dropdown-item"
+                                                              onclick="setEditingComment({{$comment->id}}, '{{$comment->content}}')">Edit</a></li>
+                                                        <li><a class="dropdown-item"
+                                                               href="{{ route('deleteComment', ['id' => $comment->id]) }}">Delete</a></li>
                                                     </ul>
                                                 </div>
                                             @endif
@@ -88,12 +122,14 @@
                     </div>
 
 
-                    <form id="editCommentForm" class="form-block be-comment-block " action="{{ route('editComment') }}" method="post" style="display: none;">
+                    <form id="editCommentForm" class="form-block be-comment-block " action="{{ route('editComment') }}"
+                          method="post" style="display: none;">
                         @csrf
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
-                                    <textarea id="editCommentContent" class="form-input" name="content" required="" placeholder="Edit your message"></textarea>
+                                    <textarea id="editCommentContent" class="form-input" name="content" required=""
+                                              placeholder="Edit your message"></textarea>
                                     <input id="commentIdInput" type="hidden" name="id" value="">
                                 </div>
                             </div>
@@ -103,12 +139,14 @@
                         </div>
                     </form>
 
-                    <form id="createCommentForm" class="form-block be-comment-block" action="{{ route('create.comment') }}" method="post">
+                    <form id="createCommentForm" class="form-block be-comment-block"
+                          action="{{ route('create.comment') }}" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
-                                    <textarea class="form-input" name="content" required="" placeholder="Your text"></textarea>
+                                    <textarea class="form-input" name="content" required=""
+                                              placeholder="Your text"></textarea>
                                     <input type="hidden" name="task_id" value="{{ $task->id }}">
                                 </div>
                             </div>
@@ -179,7 +217,7 @@
                     <p>Assignee: </p>
                     <div class="d-flex align-items-start margin-between-sections">
                         <div class="dropdown d-flex align-items-center">
-                        <div class="row">
+                            <div class="row">
                                 <div class="col rounded-circle text-white mr-1"
                                      style="width: 35px; height: 35px; line-height: 35px; text-align: center; font-size: 18px;">
                                     @if ($task->assignedTo)
@@ -190,16 +228,17 @@
                                             </div>
                                         @else
                                             <div class="col">
-                                                <img src="data:image/jpeg;base64,{{ base64_encode($task->assignedTo->profile_picture) }}"
-                                                     class="rounded-circle"
-                                                     alt="Profile Picture"
-                                                     style="width: 45px; height: 45px; object-fit: cover;">
+                                                <img
+                                                    src="data:image/jpeg;base64,{{ base64_encode($task->assignedTo->profile_picture) }}"
+                                                    class="rounded-circle"
+                                                    alt="Profile Picture"
+                                                    style="width: 45px; height: 45px; object-fit: cover;">
                                             </div>
                                         @endif
                                     @else
                                         <div class="col rounded-circle bg-primary text-white mr-1"
                                              style="width: 45px; height: 45px; line-height: 45px; text-align: center; font-size: 30px;">
-                                           U
+                                            U
                                         </div>
                                     @endif
                                 </div>
@@ -260,10 +299,11 @@
                                 </div>
                             @else
                                 <div class="col">
-                                    <img src="data:image/jpeg;base64,{{ base64_encode($task->authoredBy->profile_picture) }}"
-                                         class="rounded-circle"
-                                         alt="Profile Picture"
-                                         style="width: 45px; height: 45px; object-fit: cover;">
+                                    <img
+                                        src="data:image/jpeg;base64,{{ base64_encode($task->authoredBy->profile_picture) }}"
+                                        class="rounded-circle"
+                                        alt="Profile Picture"
+                                        style="width: 45px; height: 45px; object-fit: cover;">
                                 </div>
                             @endif
 
