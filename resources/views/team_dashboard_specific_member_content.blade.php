@@ -23,6 +23,15 @@
                                         <a href="{{ route('task.overview', ['task' => $task->id]) }}"
                                            class="task-title task-link" draggable="false">
                                             <span>{{$task->title}}</span>
+                                            @if ($task->taskStatus == 1)
+                                                <i class="bi bi-hourglass-top"></i>
+                                            @elseif ($task->taskStatus == 2)
+                                                <i class="bi bi-hourglass-split"></i>
+                                            @elseif ($task->taskStatus == 3)
+                                                <i class="bi bi-stop-circle"></i>
+                                            @elseif ($task->taskStatus == 4)
+                                                <i class="bi bi-hourglass-bottom"></i>
+                                            @endif
 
                                             <div class="dropdown right">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -65,6 +74,15 @@
                                         <a href="{{ route('task.overview', ['task' => $task->id]) }}"
                                            class="task-title task-link" draggable="false">
                                             <span>{{$task->title}}</span>
+                                            @if ($task->taskStatus == 1)
+                                                <i class="bi bi-hourglass-top"></i>
+                                            @elseif ($task->taskStatus == 2)
+                                                <i class="bi bi-hourglass-split"></i>
+                                            @elseif ($task->taskStatus == 3)
+                                                <i class="bi bi-stop-circle"></i>
+                                            @elseif ($task->taskStatus == 4)
+                                                <i class="bi bi-hourglass-bottom"></i>
+                                            @endif
 
                                             <div class="dropdown right">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -108,6 +126,15 @@
                                         <a href="{{ route('task.overview', ['task' => $task->id]) }}"
                                            class="task-title task-link" draggable="false">
                                             <span>{{$task->title}}</span>
+                                            @if ($task->taskStatus == 1)
+                                                <i class="bi bi-hourglass-top"></i>
+                                            @elseif ($task->taskStatus == 2)
+                                                <i class="bi bi-hourglass-split"></i>
+                                            @elseif ($task->taskStatus == 3)
+                                                <i class="bi bi-stop-circle"></i>
+                                            @elseif ($task->taskStatus == 4)
+                                                <i class="bi bi-hourglass-bottom"></i>
+                                            @endif
 
                                             <div class="dropdown right">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -151,6 +178,15 @@
                                         <a href="{{ route('task.overview', ['task' => $task->id]) }}"
                                            class="task-title task-link" draggable="false">
                                             <span>{{$task->title}}</span>
+                                            @if ($task->taskStatus == 1)
+                                                <i class="bi bi-hourglass-top"></i>
+                                            @elseif ($task->taskStatus == 2)
+                                                <i class="bi bi-hourglass-split"></i>
+                                            @elseif ($task->taskStatus == 3)
+                                                <i class="bi bi-stop-circle"></i>
+                                            @elseif ($task->taskStatus == 4)
+                                                <i class="bi bi-hourglass-bottom"></i>
+                                            @endif
 
                                             <div class="dropdown right">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"

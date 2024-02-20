@@ -12041,3 +12041,6 @@ img.task-assignee-photo{
     height: calc(100vh - 50px) !important;
 }
 
+.child-task {
+    margin-bottom: 5px; /* Adjust the value as needed */
+}

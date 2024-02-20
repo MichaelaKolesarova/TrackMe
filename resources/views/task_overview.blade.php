@@ -1,4 +1,10 @@
-@php use App\Helpers\DataStructures\PriorityEnum;use App\Helpers\DataStructures\TaskStatusEnum;use App\Models\Comment;use App\Models\Task;use App\Models\User; @endphp
+@php
+        use App\Helpers\DataStructures\PriorityEnum;
+     use App\Helpers\DataStructures\TaskStatusEnum;
+     use App\Models\Comment;
+     use App\Models\Task;
+     use App\Models\User;
+ @endphp
 @extends('layouts.base')
 
 @section('content')
@@ -7,7 +13,7 @@
         <div class="col ">
             <div class="row">
                 <div class="col d-flex align-items-center" style="padding-right: 50px">
-                    <h1 class="fw-bolder small-margin"><span class="text-gradient d-inline">{{$task->title}}</span></h1>
+                    <h1 class="fw-bolder small-margin"><span class="text-gradient d-inline">{{$task->title}} </span></h1>
 
                     @if(auth()->id() == $task->assignee || auth()->user()->is_team_lead)
                         <form action="{{ route('deleteTask', ['id' => $task->id]) }}" method="get" class=" ms-auto">
@@ -31,11 +37,22 @@
 
                     @if($task->parent_task != null)
                         <h5 class="fs-3 text-muted">Parent task:</h5>
-                        <p class="margin-between-sections ">
+                        <p class="margin-between-sections">
                             <a href="{{ route('task.overview', ['task' => $task->parent_task]) }}">
-                                <span style="color: #1a1e21">{{ $task->parentTask->title }}</span>
+                                <span class="text-gradient">{{$task->parentTask->id}} - {{ $task->parentTask->title }}
+                                @if ($task->parentTask->taskStatus == 1)
+                                    <i class="bi bi-hourglass-top"></i>
+                                @elseif ($task->parentTask->taskStatus == 2)
+                                    <i class="bi bi-hourglass-split"></i>
+                                @elseif ($task->parentTask->taskStatus == 3)
+                                        <i class="bi bi-stop-circle"></i>
+                                @elseif ($task->parentTask->taskStatus == 4)
+                                    <i class="bi bi-hourglass-bottom"></i>
+                                @endif
+                                 </span>
                             </a>
                         </p>
+
                     @else
                         <h5 class="fs-3 text-muted"> Parent task:</h5>
                         <p class="margin-between-sections "><span
@@ -44,14 +61,27 @@
 
                     @if($task->childTasks()->count() > 0)
                         <h5 class="fs-3 text-muted">Child tasks:</h5>
-                    @foreach($task->childTasks as $childtask)
-                            <p class="margin-between-sections ">
+                        @foreach($task->childTasks as $childtask)
+                            <p class="margin-between-sections child-task">
                                 <a href="{{ route('task.overview', ['task' => $childtask->id]) }}">
-                                    <span class="text-gradient" >{{ $childtask->title }}</span>
+                                    <span class="text-gradient">{{$childtask->id}} - {{ $childtask->title }}
+                                        //TODO - kontrolovať ENUM, nie int
+                                        @if ($childtask->taskStatus == 1)
+                                            <i class="bi bi-hourglass-top"></i>
+                                        @elseif ($childtask->taskStatus == 2)
+                                            <i class="bi bi-hourglass-split"></i>
+                                        @elseif ($childtask->taskStatus == 3)
+                                            <i class="bi bi-stop-circle"></i>
+                                        @elseif ($childtask->taskStatus == 4)
+                                            <i class="bi bi-hourglass-bottom"></i>
+                                        @endif
+                                    </span>
                                 </a>
                             </p>
-                    @endforeach
+                        @endforeach
                     @endif
+
+
 
 
 

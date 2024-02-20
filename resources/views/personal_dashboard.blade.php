@@ -33,6 +33,16 @@
                                     <div class="task-name fill-width row">
                                         <a href="{{ route('task.overview', ['task' => $task->id]) }}" class="task-title task-link" draggable="false">
                                             <span>{{$task->title}}</span>
+                                                @if ($task->taskStatus == 1)
+                                                    <i class="bi bi-hourglass-top"></i>
+                                                @elseif ($task->taskStatus == 2)
+                                                    <i class="bi bi-hourglass-split"></i>
+                                                @elseif ($task->taskStatus == 3)
+                                                    <i class="bi bi-stop-circle"></i>
+                                                @elseif ($task->taskStatus == 4)
+                                                    <i class="bi bi-hourglass-bottom"></i>
+                                                @endif
+
                                         </a>
 
                                         <div class="dropdown right">
@@ -67,6 +77,15 @@
                                     <div class="task-name fill-width row">
                                         <a href="{{ route('task.overview', ['task' => $task->id]) }}" class="task-title task-link" draggable="false">
                                             <span>{{$task->title}}</span>
+                                            @if ($task->taskStatus == 1)
+                                                <i class="bi bi-hourglass-top"></i>
+                                            @elseif ($task->taskStatus == 2)
+                                                <i class="bi bi-hourglass-split"></i>
+                                            @elseif ($task->taskStatus == 3)
+                                                <i class="bi bi-stop-circle"></i>
+                                            @elseif ($task->taskStatus == 4)
+                                                <i class="bi bi-hourglass-bottom"></i>
+                                            @endif
                                         </a>
 
                                         <div class="dropdown right">
@@ -101,6 +120,15 @@
                                     <div class="task-name fill-width row">
                                         <a href="{{ route('task.overview', ['task' => $task->id]) }}" class="task-title task-link" draggable="false">
                                             <span>{{$task->title}}</span>
+                                            @if ($task->taskStatus == 1)
+                                                <i class="bi bi-hourglass-top"></i>
+                                            @elseif ($task->taskStatus == 2)
+                                                <i class="bi bi-hourglass-split"></i>
+                                            @elseif ($task->taskStatus == 3)
+                                                <i class="bi bi-stop-circle"></i>
+                                            @elseif ($task->taskStatus == 4)
+                                                <i class="bi bi-hourglass-bottom"></i>
+                                            @endif
                                         </a>
 
                                         <div class="dropdown right">
@@ -134,6 +162,15 @@
                                     <div class="task-name fill-width row">
                                         <a href="{{ route('task.overview', ['task' => $task->id]) }}" class="task-title task-link" draggable="false">
                                             <span>{{$task->title}}</span>
+                                            @if ($task->taskStatus == 1)
+                                                <i class="bi bi-hourglass-top"></i>
+                                            @elseif ($task->taskStatus == 2)
+                                                <i class="bi bi-hourglass-split"></i>
+                                            @elseif ($task->taskStatus == 3)
+                                                <i class="bi bi-stop-circle"></i>
+                                            @elseif ($task->taskStatus == 4)
+                                                <i class="bi bi-hourglass-bottom"></i>
+                                            @endif
                                         </a>
 
                                         <div class="dropdown right">
