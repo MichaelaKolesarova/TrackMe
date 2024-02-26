@@ -33,15 +33,18 @@
                                     <div class="task-name fill-width row">
                                         <a href="{{ route('task.overview', ['task' => $task->id]) }}" class="task-title task-link" draggable="false">
                                             <span>{{$task->title}}</span>
-                                                @if ($task->taskStatus == 1)
-                                                    <i class="bi bi-hourglass-top"></i>
-                                                @elseif ($task->taskStatus == 2)
-                                                    <i class="bi bi-hourglass-split"></i>
-                                                @elseif ($task->taskStatus == 3)
-                                                    <i class="bi bi-stop-circle"></i>
-                                                @elseif ($task->taskStatus == 4)
-                                                    <i class="bi bi-hourglass-bottom"></i>
+
+                                            <!--TODO najdi dobre ikony -->
+                                                @if ($task->priority == 1)
+                                                    <i class="bi bi-egg-fried"></i>
+                                                @elseif ($task->priority == 2)
+                                                    <i class="bi bi-egg-fried"></i>
+                                                @elseif ($task->priority == 3)
+                                                    <i class="bi bi-droplet"></i>
+                                                @elseif ($task->priority == 4)
+                                                    <i class="bi bi-snow2"></i>
                                                 @endif
+
 
                                         </a>
 
@@ -77,14 +80,15 @@
                                     <div class="task-name fill-width row">
                                         <a href="{{ route('task.overview', ['task' => $task->id]) }}" class="task-title task-link" draggable="false">
                                             <span>{{$task->title}}</span>
-                                            @if ($task->taskStatus == 1)
-                                                <i class="bi bi-hourglass-top"></i>
-                                            @elseif ($task->taskStatus == 2)
-                                                <i class="bi bi-hourglass-split"></i>
-                                            @elseif ($task->taskStatus == 3)
-                                                <i class="bi bi-stop-circle"></i>
-                                            @elseif ($task->taskStatus == 4)
-                                                <i class="bi bi-hourglass-bottom"></i>
+
+                                            @if ($task->priority == 1)
+                                                <i class="bi bi-egg-fried"></i>
+                                            @elseif ($task->priority == 2)
+                                                <i class="bi bi-egg-fried"></i>
+                                            @elseif ($task->priority == 3)
+                                                <i class="bi bi-droplet"></i>
+                                            @elseif ($task->priority == 4)
+                                                <i class="bi bi-snow2"></i>
                                             @endif
                                         </a>
 
@@ -120,14 +124,14 @@
                                     <div class="task-name fill-width row">
                                         <a href="{{ route('task.overview', ['task' => $task->id]) }}" class="task-title task-link" draggable="false">
                                             <span>{{$task->title}}</span>
-                                            @if ($task->taskStatus == 1)
-                                                <i class="bi bi-hourglass-top"></i>
-                                            @elseif ($task->taskStatus == 2)
-                                                <i class="bi bi-hourglass-split"></i>
-                                            @elseif ($task->taskStatus == 3)
-                                                <i class="bi bi-stop-circle"></i>
-                                            @elseif ($task->taskStatus == 4)
-                                                <i class="bi bi-hourglass-bottom"></i>
+                                            @if ($task->priority == 1)
+                                                <i class="bi bi-egg-fried"></i>
+                                            @elseif ($task->priority == 2)
+                                                <i class="bi bi-egg-fried"></i>
+                                            @elseif ($task->priority == 3)
+                                                <i class="bi bi-droplet"></i>
+                                            @elseif ($task->priority == 4)
+                                                <i class="bi bi-snow2"></i>
                                             @endif
                                         </a>
 
@@ -162,14 +166,14 @@
                                     <div class="task-name fill-width row">
                                         <a href="{{ route('task.overview', ['task' => $task->id]) }}" class="task-title task-link" draggable="false">
                                             <span>{{$task->title}}</span>
-                                            @if ($task->taskStatus == 1)
-                                                <i class="bi bi-hourglass-top"></i>
-                                            @elseif ($task->taskStatus == 2)
-                                                <i class="bi bi-hourglass-split"></i>
-                                            @elseif ($task->taskStatus == 3)
-                                                <i class="bi bi-stop-circle"></i>
-                                            @elseif ($task->taskStatus == 4)
-                                                <i class="bi bi-hourglass-bottom"></i>
+                                            @if ($task->priority == 1)
+                                                <i class="bi bi-egg-fried"></i>
+                                            @elseif ($task->priority == 2)
+                                                <i class="bi bi-egg-fried"></i>
+                                            @elseif ($task->priority == 3)
+                                                <i class="bi bi-droplet"></i>
+                                            @elseif ($task->priority == 4)
+                                                <i class="bi bi-snow2"></i>
                                             @endif
                                         </a>
 

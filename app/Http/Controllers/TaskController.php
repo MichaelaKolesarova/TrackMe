@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DataStructures\TaskActivitiesEnum;
 use App\Helpers\DataStructures\TaskStatusEnum;
 use App\Models\Post;
 use App\Models\Task;
+use App\Models\TaskLog;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -30,7 +32,12 @@ class TaskController extends Controller
         $inputFields['title'] = strip_tags($inputFields['title']); //html tags
         $inputFields['description'] = strip_tags($inputFields['description']);
         $inputFields['author'] = auth()->id();
-        Task::create($inputFields);
+        $task = Task::create($inputFields);
+        TaskLog::create([
+            'task' => $task->id,
+            'who' => auth()->id(),
+            'changedWhat' => TaskActivitiesEnum::Create,
+        ]);
         return redirect()->back()->with(['message' => 'Task created successfully']);
 
     }
@@ -57,6 +64,12 @@ class TaskController extends Controller
 
         $task->taskStatus = $request->get('taskStatus');
         $task->save();
+        TaskLog::create([
+            'task' => $task->id,
+            'who' => auth()->id(),
+            'changedWhat' => TaskActivitiesEnum::UpdateTaskStatus,
+            'toWhat' => $request->get('taskStatus'),
+        ]);
 
         return redirect()->back()->with(['message' => 'Task updated successfully']);
     }
@@ -75,6 +88,12 @@ class TaskController extends Controller
         }
         $task->taskStatus = $inputFields['newStatus'];
         $task->save();
+        TaskLog::create([
+            'task' => $task->id,
+            'who' => auth()->id(),
+            'changedWhat' => TaskActivitiesEnum::UpdateTaskStatus,
+            'toWhat' => $request->get('newStatus'),
+        ]);
 
         return redirect()->back()->with(['success' => 'Task updated successfully']);
 
@@ -94,6 +113,12 @@ class TaskController extends Controller
         }
         $task->priority = $inputFields['newStatus'];
         $task->save();
+        TaskLog::create([
+            'task' => $task->id,
+            'who' => auth()->id(),
+            'changedWhat' => TaskActivitiesEnum::UpdatePriority,
+            'toWhat' => $request->get('newStatus'),
+        ]);
 
         return redirect()->back()->with(['success' => 'Task updated successfully']);
 
@@ -118,6 +143,12 @@ class TaskController extends Controller
             $task->assignee = $inputFields['newAssignee'];
         }
         $task->save();
+        TaskLog::create([
+            'task' => $task->id,
+            'who' => auth()->id(),
+            'changedWhat' => TaskActivitiesEnum::UpdateAssignee,
+            'toWhat' => $request->get('newAssignee'),
+        ]);
 
         return redirect()->back()->with(['success' => 'Task updated successfully']);
 
@@ -142,8 +173,4 @@ class TaskController extends Controller
         return view('dropdown_button', ['chosenUser' => $userId ])->render();
 
     }
-
-
-
-
 }

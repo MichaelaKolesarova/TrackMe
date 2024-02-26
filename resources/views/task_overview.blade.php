@@ -1,10 +1,10 @@
 @php
-        use App\Helpers\DataStructures\PriorityEnum;
-     use App\Helpers\DataStructures\TaskStatusEnum;
-     use App\Models\Comment;
-     use App\Models\Task;
-     use App\Models\User;
- @endphp
+    use App\Helpers\DataStructures\PriorityEnum;
+ use App\Helpers\DataStructures\TaskActivitiesEnum;use App\Helpers\DataStructures\TaskStatusEnum;
+ use App\Models\Comment;
+ use App\Models\Task;
+ use App\Models\TaskLog;use App\Models\Team;use App\Models\User;
+@endphp
 @extends('layouts.base')
 
 @section('content')
@@ -13,7 +13,8 @@
         <div class="col ">
             <div class="row">
                 <div class="col d-flex align-items-center" style="padding-right: 50px">
-                    <h1 class="fw-bolder small-margin"><span class="text-gradient d-inline">{{$task->title}} </span></h1>
+                    <h1 class="fw-bolder small-margin"><span class="text-gradient d-inline">{{$task->title}} </span>
+                    </h1>
 
                     @if(auth()->id() == $task->assignee || auth()->user()->is_team_lead)
                         <form action="{{ route('deleteTask', ['id' => $task->id]) }}" method="get" class=" ms-auto">
@@ -40,15 +41,25 @@
                         <p class="margin-between-sections">
                             <a href="{{ route('task.overview', ['task' => $task->parent_task]) }}">
                                 <span class="text-gradient">{{$task->parentTask->id}} - {{ $task->parentTask->title }}
-                                @if ($task->parentTask->taskStatus == 1)
-                                    <i class="bi bi-hourglass-top"></i>
-                                @elseif ($task->parentTask->taskStatus == 2)
-                                    <i class="bi bi-hourglass-split"></i>
-                                @elseif ($task->parentTask->taskStatus == 3)
+                                    @if ($task->parentTask->taskStatus == 1)
+                                        <i class="bi bi-hourglass-top"></i>
+                                    @elseif ($task->parentTask->taskStatus == 2)
+                                        <i class="bi bi-hourglass-split"></i>
+                                    @elseif ($task->parentTask->taskStatus == 3)
                                         <i class="bi bi-stop-circle"></i>
-                                @elseif ($task->parentTask->taskStatus == 4)
-                                    <i class="bi bi-hourglass-bottom"></i>
-                                @endif
+                                    @elseif ($task->parentTask->taskStatus == 4)
+                                        <i class="bi bi-hourglass-bottom"></i>
+                                    @endif
+
+                                    @if ($task->parentTask->priority == 4)
+                                        <i class="bi bi-egg-fried"></i>
+                                    @elseif ($task->parentTask->priority == 3)
+                                        <i class="bi bi-egg-fried"></i>
+                                    @elseif ($task->parentTask->priority == 2)
+                                        <i class="bi bi-droplet"></i>
+                                    @elseif ($task->parentTask->priority == 1)
+                                        <i class="bi bi-snow2"></i>
+                                    @endif
                                  </span>
                             </a>
                         </p>
@@ -65,7 +76,7 @@
                             <p class="margin-between-sections child-task">
                                 <a href="{{ route('task.overview', ['task' => $childtask->id]) }}">
                                     <span class="text-gradient">{{$childtask->id}} - {{ $childtask->title }}
-                                        //TODO - kontrolovať ENUM, nie int
+                                        <!--TODO - kontrolovať ENUM, nie int -->
                                         @if ($childtask->taskStatus == 1)
                                             <i class="bi bi-hourglass-top"></i>
                                         @elseif ($childtask->taskStatus == 2)
@@ -75,14 +86,21 @@
                                         @elseif ($childtask->taskStatus == 4)
                                             <i class="bi bi-hourglass-bottom"></i>
                                         @endif
+
+                                        @if ($childtask->priority == 4)
+                                            <i class="bi bi-egg-fried"></i>
+                                        @elseif ($childtask->priority == 3)
+                                            <i class="bi bi-egg-fried"></i>
+                                        @elseif ($childtask->priority == 2)
+                                            <i class="bi bi-droplet"></i>
+                                        @elseif ($childtask->priority == 1)
+                                            <i class="bi bi-snow2"></i>
+                                        @endif
                                     </span>
                                 </a>
                             </p>
                         @endforeach
                     @endif
-
-
-
 
 
                     <h5 class="fs-3 text-muted"> Comments:</h5>
@@ -187,7 +205,7 @@
                     </form>
                 </div>
 
-                <div class="col-3 small-margin ml-auto">
+                <div class="col-3 small-margin ml-auto scrollable">
 
                     <p>status: </p>
 
@@ -244,7 +262,7 @@
                     </div>
 
 
-                    <p>Assignee: </p>
+                    <p>assignee: </p>
                     <div class="d-flex align-items-start margin-between-sections">
                         <div class="dropdown d-flex align-items-center">
                             <div class="row">
@@ -318,7 +336,7 @@
                         </div>
                     </div>
 
-                    <p>Author: </p>
+                    <p>author: </p>
                     <div class="d-flex align-items-start margin-between-sections">
                         <div class="rounded-circle text-white mr-1"
                              style="width: 35px; height: 35px; line-height: 35px; text-align: center; font-size: 18px;">
@@ -341,6 +359,41 @@
                         <div class="flex-grow-1 ml-3 person-text small-margin">
                             {{$task->authoredBy->name}}
                         </div>
+                    </div>
+
+                    <p>Task Log: </p>
+                    <div class="align-items-start margin-between-sections">
+                        @foreach(TaskLog::all() as $log)
+                            <p>
+                                <span class="text-gradient">{{ $log->getWhoName() }} </span>
+                                {{ TaskActivitiesEnum::toString(TaskActivitiesEnum::from($log->changedWhat)) }}
+                                <span class="text-body-emphasis">
+                                    @if($log->changedWhat != null)
+                                        @if(TaskActivitiesEnum::from($log->changedWhat) == TaskActivitiesEnum::UpdateAssignee)
+                                            @if($log->toWhat != 0)
+                                                {{User::find($log->toWhat)->name}}
+                                            @else
+                                                unassigned
+                                            @endif
+                                        @elseif(TaskActivitiesEnum::from($log->changedWhat) == TaskActivitiesEnum::UpdateDueDate)
+                                            {{--User::find($log->toWhat)->name--}}
+                                        @elseif(TaskActivitiesEnum::from($log->changedWhat) == TaskActivitiesEnum::UpdatePriority)
+                                            {{ PriorityEnum::toString(PriorityEnum::from($log->toWhat)) }}
+                                        @elseif(TaskActivitiesEnum::from($log->changedWhat) == TaskActivitiesEnum::UpdateTaskStatus)
+                                            {{ TaskStatusEnum::toString(TaskStatusEnum::from($log->toWhat)) }}
+                                        @elseif(TaskActivitiesEnum::from($log->changedWhat) == TaskActivitiesEnum::CreateChildTask)
+                                            {{ Task::find($log->toWhat)->title }}
+                                        @elseif(TaskActivitiesEnum::from($log->changedWhat) == TaskActivitiesEnum::UpdateTeamAssignedTo)
+                                            {{Team::find($log->toWhat)->name}}
+                                        @else
+                                            Unknow state
+                                        @endif
+                                    @endif
+
+                                 </span>
+                            </p>
+                        @endforeach
+
                     </div>
                 </div>
             </div>

@@ -56,5 +56,10 @@ class User extends Authenticatable
         return $this->hasMany(Task::class, 'assignee', )->where('taskStatus', $taskStatus)->get();
     }
 
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class, 'team_membership');
+    }
+
 
 }

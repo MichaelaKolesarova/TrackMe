@@ -10,7 +10,7 @@ enum PriorityEnum: int
     case ImportantUrgent = 4;
 
 
-    public static function toString($value): string
+    public static function toString(self $value): string
     {
         switch ($value) {
             case self::NotImportantNotUrgent:
