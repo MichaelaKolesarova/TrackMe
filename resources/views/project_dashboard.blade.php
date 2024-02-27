@@ -1,6 +1,8 @@
 @php
     use App\Helpers\DataStructures\TaskStatusEnum;
-    use App\Models\Task;use App\Models\Team;use App\Models\User;
+    use App\Models\Project;use App\Models\Task;
+    use App\Models\Team;
+    use App\Models\User;
 @endphp
 
 @extends('layouts.base')
@@ -20,10 +22,12 @@
 
 
                 <h5 class="small-margin fs-3 text-muted"> ID: <span style="color: #1a1e21">{{$project->id}} </span></h5>
+                <h5 class="fs-3 text-muted small-margin">Project lead: <span class="text-gradient"><a
+                            href="{{ route('openChat', ['userId' => $project->project_lead]) }}"
+                            style="color: #1a1e21">{{User::find($project->project_lead)->name}}</a></span></h5>
 
                 <div class="col small-margin scrollable">
-                <!--TODO tu ide progress bar - workflows-->
-
+                    <!--TODO tu ide progress bar - workflows-->
 
 
                     <!--ASSIGNED To OTHER TEAM MEMBERS-->
@@ -51,9 +55,12 @@
 
                 <div class="col-3 small-margin ml-auto scrollable">
 
-                    <p>status: </p>
+                    <p>Teams working on project: </p>
+                    @foreach($project->teams as $team)
+                        <p>{{$team->team_name}}</p>
+                    @endforeach
 
-                    <p>Task Log: </p>
+                    <p>Project Log: </p>
 
 
                 </div>
