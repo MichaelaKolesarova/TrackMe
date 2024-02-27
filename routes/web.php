@@ -3,9 +3,9 @@
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
-use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,10 +62,13 @@ Route::get('/openChat/{userId}', [MessageController::class, 'openChat'])->name('
 Route::get('/openTeamChat/', [MessageController::class, 'openTeamChat'])->name('openTeamChat');
 Route::post('/create-message', [MessageController::class, 'createMessage'])->name('create.message');
 Route::post('/receive', [MessageController::class, 'receive'])->name('receive');
-
-
 Route::get('/deleteMessage/{id}', [MessageController::class, 'deleteMessage'])->name('deleteMessage');
 Route::post('/editMessage', [MessageController::class, 'editMessage'])->name('editMessage');
+
+//projects
+Route::get('/project_dashboard/{project}', [ProjectController::class, 'showProjectDashboard'])->name('project_dashboard');
+Route::post('/update-chosen-team', [ProjectController::class, 'updateChosenTeamCards'])->name('update-chosen-team');
+Route::post('/update-button-project', [ProjectController::class, 'updateButtonProject'])->name('update-button-project');
 
 
 

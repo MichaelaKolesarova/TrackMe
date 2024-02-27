@@ -252,7 +252,6 @@
                     @include('dropdown_button', ['chosenUser' => $chosenUser ])
                 </div>
 
-
             </div>
 
             <div style="margin: 50px"></div>

@@ -2,7 +2,7 @@
     use App\Helpers\DataStructures\PriorityEnum;
  use App\Helpers\DataStructures\TaskActivitiesEnum;use App\Helpers\DataStructures\TaskStatusEnum;
  use App\Models\Comment;
- use App\Models\Task;
+ use App\Models\Project;use App\Models\Task;
  use App\Models\TaskLog;use App\Models\Team;use App\Models\User;
 @endphp
 @extends('layouts.base')
@@ -16,7 +16,7 @@
                     <h1 class="fw-bolder small-margin"><span class="text-gradient d-inline">{{$task->title}} </span>
                     </h1>
 
-                    @if(auth()->id() == $task->assignee || auth()->user()->is_team_lead)
+                    @if(auth()->id() == $task->assignee || auth()->user()->is_admin)
                         <form action="{{ route('deleteTask', ['id' => $task->id]) }}" method="get" class=" ms-auto">
                             @csrf
                             <button type="submit" class="btn btn-danger">
@@ -35,6 +35,12 @@
 
                     <h5 class="fs-3 text-muted"> Description:</h5>
                     <p class="margin-between-sections "><span style="color: #1a1e21">{{$task->description}}</span></p>
+
+                    <h5 class="fs-3 text-muted">Project:</h5>
+                    <p class="margin-between-sections">
+                        <a href="{{ route('project_dashboard', ['project' => $task->project]) }}"
+                           style="color: #1a1e21">{{Project::find($task->project)->project_name}}</a>
+                    </p>
 
                     @if($task->parent_task != null)
                         <h5 class="fs-3 text-muted">Parent task:</h5>
@@ -363,7 +369,7 @@
 
                     <p>Task Log: </p>
                     <div class="align-items-start margin-between-sections">
-                        @foreach(TaskLog::all() as $log)
+                        @foreach(TaskLog::all()->where('task', $task->id) as $log)
                             <p>
                                 <span class="text-gradient">{{ $log->getWhoName() }} </span>
                                 {{ TaskActivitiesEnum::toString(TaskActivitiesEnum::from($log->changedWhat)) }}

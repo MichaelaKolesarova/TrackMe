@@ -10,11 +10,11 @@
   - [x] assignee viac assignees
   - [ ] viac assignees
   - [x] autor
-  - [ ] reporter
   - [x] komentáre
   - [x] ID - skus do id zakomponovat T(task)/P(project)/Team/
   - [ ] labels
   - [x] projekt ku ktorému je zaradený task
+  - [x] due date - zmena
   - [x] log úprav tasku - preklik na osobu, čas 
 - [ ] problémy
 - [x] Dashboardy – s nezaradenými a zaradenými taskami
@@ -29,3 +29,10 @@
 - [ ] Blockers
 - [ ] Šprinty - nastavenie intervalov práce a hodnotenia
 - [ ] Spojenie s GITom
+
+
+## Details, opravy:
+- [ ] ak nie som prihlásený, presmeruj ma na prihlásenie
+- [ ] oprava poctov taskov ked ich presuvam
+- [ ] zoradenie taskov podla due Date
+- 

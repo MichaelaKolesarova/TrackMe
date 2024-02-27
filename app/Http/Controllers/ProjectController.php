@@ -10,9 +10,23 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function showProjectDashboard(Project $project)
     {
-        //
+        return view('project_dashboard', ['project' => $project]);
+
+    }
+    public function updateChosenTeamCards(Request $request)
+    {
+        $teamId = $request['teamId'];
+        return view('project_dashboard_specific_team_content', ['chosenTeam' => $teamId ])->render();
+
+    }
+
+    public function updateButtonProject(Request $request)
+    {
+        $teamId = $request['teamId'];
+        return view('project_dropdown_button', ['chosenTeam' => $teamId ])->render();
+
     }
 
     /**

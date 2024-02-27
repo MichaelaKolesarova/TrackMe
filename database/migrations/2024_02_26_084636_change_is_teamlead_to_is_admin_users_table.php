@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('is_admin_users', function (Blueprint $table) {
-            //
+        Schema::table('users', function (Blueprint $table) {
+            $table->renameColumn('is_team_lead', 'is_admin');
         });
     }
 
@@ -21,8 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('is_admin_users', function (Blueprint $table) {
-            //
+        Schema::table('users', function (Blueprint $table) {
+            $table->renameColumn('is_admin', 'is_team_lead');
         });
     }
+
 };
