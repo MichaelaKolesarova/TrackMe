@@ -1,9 +1,9 @@
 @php
-    use App\Helpers\DataStructures\PriorityEnum;
+    use App\Helpers\DataStructures\EntitiesEnum;use App\Helpers\DataStructures\PriorityEnum;
  use App\Helpers\DataStructures\TaskActivitiesEnum;use App\Helpers\DataStructures\TaskStatusEnum;
  use App\Models\Comment;
  use App\Models\Project;use App\Models\Task;
- use App\Models\TaskLog;use App\Models\Team;use App\Models\User;
+ use App\Models\Log;use App\Models\Team;use App\Models\User;
 @endphp
 @extends('layouts.base')
 
@@ -36,11 +36,11 @@
                     <h5 class="fs-3 text-muted"> Description:</h5>
                     <p class="margin-between-sections "><span style="color: #1a1e21">{{$task->description}}</span></p>
 
-                    <h5 class="fs-3 text-muted">Project:</h5>
-                    <p class="margin-between-sections">
-                        <a href="{{ route('project_dashboard', ['project' => $task->project]) }}"
+                    <h5 class="fs-3 text-muted margin-between-sections">Project: <span>
+                        <a class="text-gradient" href="{{ route('project_dashboard', ['project' => $task->project]) }}"
                            style="color: #1a1e21">{{Project::find($task->project)->project_name}}</a>
-                    </p>
+                    </span></h5>
+
 
                     @if($task->parent_task != null)
                         <h5 class="fs-3 text-muted">Parent task:</h5>
@@ -369,7 +369,7 @@
 
                     <p>Task Log: </p>
                     <div class="align-items-start margin-between-sections">
-                        @foreach(TaskLog::all()->where('task', $task->id) as $log)
+                        @foreach(Log::where('entity_id', $task->id)->where('entity_type', EntitiesEnum::Task)->get() as $log)
                             <p>
                                 <span class="text-gradient">{{ $log->getWhoName() }} </span>
                                 {{ TaskActivitiesEnum::toString(TaskActivitiesEnum::from($log->changedWhat)) }}

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DataStructures\EntitiesEnum;
+use App\Helpers\DataStructures\ProjectActivitiesEnum;
 use App\Helpers\DataStructures\TaskActivitiesEnum;
 use App\Helpers\DataStructures\TaskStatusEnum;
 use App\Models\Post;
 use App\Models\Task;
-use App\Models\TaskLog;
+use App\Models\Log;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -33,11 +35,30 @@ class TaskController extends Controller
         $inputFields['description'] = strip_tags($inputFields['description']);
         $inputFields['author'] = auth()->id();
         $task = Task::create($inputFields);
-        TaskLog::create([
-            'task' => $task->id,
+        Log::create([
+            'entity_id' => $task->id,
             'who' => auth()->id(),
             'changedWhat' => TaskActivitiesEnum::Create,
+            'entity_type' => EntitiesEnum::Task,
         ]);
+        if($task->parent_task == null){
+            Log::create([
+                'entity_id' => $task->project,
+                'who' => auth()->id(),
+                'changedWhat' => ProjectActivitiesEnum::CreatedNewRootTask,
+                'toWhat' => $task->id,
+                'entity_type' => EntitiesEnum::Project,
+            ]);
+        } else {
+            Log::create([
+                'entity_id' => $task->project,
+                'who' => auth()->id(),
+                'changedWhat' => ProjectActivitiesEnum::CreatedNewSubtask,
+                'toWhat' => $task->id,
+                'entity_type' => EntitiesEnum::Project,
+            ]);
+        }
+
         return redirect()->back()->with(['message' => 'Task created successfully']);
 
     }
@@ -64,11 +85,12 @@ class TaskController extends Controller
 
         $task->taskStatus = $request->get('taskStatus');
         $task->save();
-        TaskLog::create([
-            'task' => $task->id,
+        Log::create([
+            'entity_id' => $task->id,
             'who' => auth()->id(),
             'changedWhat' => TaskActivitiesEnum::UpdateTaskStatus,
             'toWhat' => $request->get('taskStatus'),
+            'entity_type' => EntitiesEnum::Task,
         ]);
 
         return redirect()->back()->with(['message' => 'Task updated successfully']);
@@ -88,11 +110,12 @@ class TaskController extends Controller
         }
         $task->taskStatus = $inputFields['newStatus'];
         $task->save();
-        TaskLog::create([
-            'task' => $task->id,
+        Log::create([
+            'entity_id' => $task->id,
             'who' => auth()->id(),
             'changedWhat' => TaskActivitiesEnum::UpdateTaskStatus,
             'toWhat' => $request->get('newStatus'),
+            'entity_type' => EntitiesEnum::Task,
         ]);
 
         return redirect()->back()->with(['success' => 'Task updated successfully']);
@@ -113,11 +136,12 @@ class TaskController extends Controller
         }
         $task->priority = $inputFields['newStatus'];
         $task->save();
-        TaskLog::create([
-            'task' => $task->id,
+        Log::create([
+            'entity_id' => $task->id,
             'who' => auth()->id(),
             'changedWhat' => TaskActivitiesEnum::UpdatePriority,
             'toWhat' => $request->get('newStatus'),
+            'entity_type' => EntitiesEnum::Task,
         ]);
 
         return redirect()->back()->with(['success' => 'Task updated successfully']);
@@ -143,11 +167,12 @@ class TaskController extends Controller
             $task->assignee = $inputFields['newAssignee'];
         }
         $task->save();
-        TaskLog::create([
-            'task' => $task->id,
+        Log::create([
+            'entity_id' => $task->id,
             'who' => auth()->id(),
             'changedWhat' => TaskActivitiesEnum::UpdateAssignee,
             'toWhat' => $request->get('newAssignee'),
+            'entity_type' => EntitiesEnum::Task,
         ]);
 
         return redirect()->back()->with(['success' => 'Task updated successfully']);

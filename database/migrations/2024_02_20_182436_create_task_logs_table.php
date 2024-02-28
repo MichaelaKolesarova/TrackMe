@@ -15,7 +15,6 @@ return new class extends Migration
         Schema::create('task_logs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('task');
-            $table->foreign('task')->references('id')->on('tasks')->cascadeOnDelete();
             $table->unsignedBigInteger('who');
             $table->foreign('who')->references('id')->on('users')->cascadeOnDelete();
             $table->enum('changedWhat', TaskActivitiesEnum::values())->nullable();

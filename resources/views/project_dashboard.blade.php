@@ -1,8 +1,9 @@
 @php
+    use App\Helpers\DataStructures\ProjectActivitiesEnum;
     use App\Helpers\DataStructures\TaskStatusEnum;
-    use App\Models\Project;use App\Models\Task;
-    use App\Models\Team;
-    use App\Models\User;
+    use App\Helpers\DataStructures\EntitiesEnum;
+    use App\Models\Log;
+    use App\Models\Task;use App\Models\User;
 @endphp
 
 @extends('layouts.base')
@@ -22,12 +23,13 @@
 
 
                 <h5 class="small-margin fs-3 text-muted"> ID: <span style="color: #1a1e21">{{$project->id}} </span></h5>
-                <h5 class="fs-3 text-muted small-margin">Project lead: <span class="text-gradient"><a
-                            href="{{ route('openChat', ['userId' => $project->project_lead]) }}"
+                <h5 class="fs-3 text-muted small-margin">Project lead: <span class=" a_hover">
+                        <a class="text-gradient" href="{{ route('openChat', ['userId' => $project->project_lead]) }}"
                             style="color: #1a1e21">{{User::find($project->project_lead)->name}}</a></span></h5>
 
                 <div class="col small-margin scrollable">
                     <!--TODO tu ide progress bar - workflows-->
+                    <div class="fs-3 fw-light text-muted">progress bar</div>
 
 
                     <!--ASSIGNED To OTHER TEAM MEMBERS-->
@@ -57,10 +59,34 @@
 
                     <p>Teams working on project: </p>
                     @foreach($project->teams as $team)
-                        <p>{{$team->team_name}}</p>
+                        <p class="text-gradient small-margin">{{$team->team_name}}</p>
                     @endforeach
 
                     <p>Project Log: </p>
+                    <div class="align-items-start margin-between-sections">
+                        @foreach(Log::where('entity_id', $project->id)->where('entity_type', EntitiesEnum::Project)->get() as $log)
+                            <p>
+                                <span class="a_hover">
+                                    <a class="text-gradient" href="{{ route('openChat', ['userId' => $log->who]) }}">{{ $log->getWhoName() }}</a>
+                                </span>
+                                {{ ProjectActivitiesEnum::toString(ProjectActivitiesEnum::from($log->changedWhat)) }}
+                                <span class="text-body-emphasis a_hover">
+                                    @if($log->changedWhat != null)
+                                        @if(ProjectActivitiesEnum::from($log->changedWhat) == ProjectActivitiesEnum::UpdateTeamLead)
+                                            {{--User::find($log->toWhat)->name--}}
+                                        @elseif(ProjectActivitiesEnum::from($log->changedWhat) == ProjectActivitiesEnum::CreatedNewRootTask)
+                                            <a class="text-gradient" href="{{ route('task.overview', ['task' => $log->toWhat]) }}">{{ Task::find($log->toWhat)->title }}</a>
+                                        @elseif(ProjectActivitiesEnum::from($log->changedWhat) == ProjectActivitiesEnum::CreatedNewSubtask)
+                                            <a class="text-gradient" href="{{ route('task.overview', ['task' => $log->toWhat]) }}">{{ Task::find($log->toWhat)->title }}</a>
+                                        @else
+                                            Unknown state
+                                        @endif
+                                    @endif
+                                </span>
+                            </p>
+                        @endforeach
+
+                    </div>
 
 
                 </div>

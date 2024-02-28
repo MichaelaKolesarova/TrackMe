@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TaskLog extends Model
+class Log extends Model
 {
     use HasFactory;
-    protected $fillable = ['task','who', 'changedWhat', 'toWhat'];
+    protected $fillable = ['entity_id','who', 'changedWhat', 'toWhat', 'entity_type'];
     public function getWhoName()
     {
         $user = User::find($this->who);

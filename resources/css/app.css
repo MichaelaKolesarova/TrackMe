@@ -12044,3 +12044,7 @@ img.task-assignee-photo{
 .child-task {
     margin-bottom: 5px; /* Adjust the value as needed */
 }
+
+.a_hover:hover {
+    text-decoration:underline;
+}
