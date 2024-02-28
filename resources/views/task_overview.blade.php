@@ -36,7 +36,7 @@
                     <h5 class="fs-3 text-muted"> Description:</h5>
                     <p class="margin-between-sections "><span style="color: #1a1e21">{{$task->description}}</span></p>
 
-                    <h5 class="fs-3 text-muted margin-between-sections">Project: <span>
+                    <h5 class="fs-3 text-muted margin-between-sections">Project: <span class="a_hover">
                         <a class="text-gradient" href="{{ route('project_dashboard', ['project' => $task->project]) }}"
                            style="color: #1a1e21">{{Project::find($task->project)->project_name}}</a>
                     </span></h5>
@@ -44,9 +44,9 @@
 
                     @if($task->parent_task != null)
                         <h5 class="fs-3 text-muted">Parent task:</h5>
-                        <p class="margin-between-sections">
-                            <a href="{{ route('task.overview', ['task' => $task->parent_task]) }}">
-                                <span class="text-gradient">{{$task->parentTask->id}} - {{ $task->parentTask->title }}
+                        <p class="margin-between-sections a_hover">
+                            <a class="text-decoration-none" href="{{ route('task.overview', ['task' => $task->parent_task]) }}">
+                                <span class="text-gradient ">{{$task->parentTask->id}} - {{ $task->parentTask->title }}
                                     @if ($task->parentTask->taskStatus == 1)
                                         <i class="bi bi-hourglass-top"></i>
                                     @elseif ($task->parentTask->taskStatus == 2)
@@ -79,8 +79,8 @@
                     @if($task->childTasks()->count() > 0)
                         <h5 class="fs-3 text-muted">Child tasks:</h5>
                         @foreach($task->childTasks as $childtask)
-                            <p class="margin-between-sections child-task">
-                                <a href="{{ route('task.overview', ['task' => $childtask->id]) }}">
+                            <p class="margin-between-sections child-task a_hover">
+                                <a class="text-decoration-none " href="{{ route('task.overview', ['task' => $childtask->id]) }}">
                                     <span class="text-gradient">{{$childtask->id}} - {{ $childtask->title }}
                                         <!--TODO - kontrolovať ENUM, nie int -->
                                         @if ($childtask->taskStatus == 1)
@@ -107,9 +107,10 @@
                             </p>
                         @endforeach
                     @endif
+                    <div class="margin-between-sections"></div>
 
 
-                    <h5 class="fs-3 text-muted"> Comments:</h5>
+                    <h5 class="fs-3 text-muted "> Comments:</h5>
                     <div class="mb-1" id="comments-container ">
                         <div>
 
@@ -371,13 +372,15 @@
                     <div class="align-items-start margin-between-sections">
                         @foreach(Log::where('entity_id', $task->id)->where('entity_type', EntitiesEnum::Task)->get() as $log)
                             <p>
-                                <span class="text-gradient">{{ $log->getWhoName() }} </span>
+                                <span class="a_hover">
+                                    <a class="text-gradient" href="{{ route('openChat', ['userId' => $log->who]) }}">{{ $log->getWhoName() }}</a>
+                                </span>
                                 {{ TaskActivitiesEnum::toString(TaskActivitiesEnum::from($log->changedWhat)) }}
                                 <span class="text-body-emphasis">
                                     @if($log->changedWhat != null)
                                         @if(TaskActivitiesEnum::from($log->changedWhat) == TaskActivitiesEnum::UpdateAssignee)
                                             @if($log->toWhat != 0)
-                                                {{User::find($log->toWhat)->name}}
+                                                <span class="a_hover"><a class="text-gradient" href="{{ route('openChat', ['userId' => $log->toWhat]) }}">{{User::find($log->toWhat)->name}}</a></span>
                                             @else
                                                 unassigned
                                             @endif
@@ -388,11 +391,11 @@
                                         @elseif(TaskActivitiesEnum::from($log->changedWhat) == TaskActivitiesEnum::UpdateTaskStatus)
                                             {{ TaskStatusEnum::toString(TaskStatusEnum::from($log->toWhat)) }}
                                         @elseif(TaskActivitiesEnum::from($log->changedWhat) == TaskActivitiesEnum::CreateChildTask)
-                                            {{ Task::find($log->toWhat)->title }}
+                                             <span class="a_hover">
+                                                 <a class="text-gradient" href="{{ route('task.overview', ['task' => $log->toWhat]) }}">{{Task::find($log->toWhat)->id}} - {{ Task::find($log->toWhat)->title }} </a>
+                                             </span>
                                         @elseif(TaskActivitiesEnum::from($log->changedWhat) == TaskActivitiesEnum::UpdateTeamAssignedTo)
                                             {{Team::find($log->toWhat)->name}}
-                                        @else
-                                            Unknow state
                                         @endif
                                     @endif
 

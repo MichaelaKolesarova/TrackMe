@@ -70,6 +70,10 @@ Route::get('/project_dashboard/{project}', [ProjectController::class, 'showProje
 Route::post('/update-chosen-team', [ProjectController::class, 'updateChosenTeamCards'])->name('update-chosen-team');
 Route::post('/update-button-project', [ProjectController::class, 'updateButtonProject'])->name('update-button-project');
 
+//admin
+Route::get('/admin-page', [App\Http\Controllers\HomeController::class, 'index'])->name('admin-page');
+
+
 
 
 

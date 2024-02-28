@@ -27,7 +27,7 @@ enum TaskActivitiesEnum: int
             case self::UpdateTaskStatus:
                 return "updated Task Status to";
             case self::CreateChildTask:
-                return "created Child Task - ";
+                return "created Child Task";
             case self::UpdateTeamAssignedTo:
                 return "update Team Assigned To";
             default:

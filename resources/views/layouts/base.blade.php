@@ -109,6 +109,13 @@
         <nav class="sb-sidenav accordion bg-gradient-primary-to-secondary" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
                 <div class="nav">
+                    @if(auth()->user()->is_admin)
+                        <div class="sb-sidenav-menu-heading">Admin</div>
+                        <a class="nav-link " href="/home">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            project administration
+                        </a>
+                    @endif
                     <div class="sb-sidenav-menu-heading">Core</div>
                     <a class="nav-link " href="/home">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>

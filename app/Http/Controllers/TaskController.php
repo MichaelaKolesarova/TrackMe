@@ -51,6 +51,13 @@ class TaskController extends Controller
             ]);
         } else {
             Log::create([
+                'entity_id' => $task->parent_task,
+                'who' => auth()->id(),
+                'changedWhat' => TaskActivitiesEnum::CreateChildTask,
+                'toWhat' => $task->id,
+                'entity_type' => EntitiesEnum::Task,
+            ]);
+            Log::create([
                 'entity_id' => $task->project,
                 'who' => auth()->id(),
                 'changedWhat' => ProjectActivitiesEnum::CreatedNewSubtask,
