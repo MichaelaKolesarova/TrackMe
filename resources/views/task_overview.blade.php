@@ -58,7 +58,7 @@
                                     @endif
 
                                     @if ($task->parentTask->priority == 4)
-                                        <i class="bi bi-egg-fried"></i>
+                                        <i class="fa-solid fa-fire"></i>
                                     @elseif ($task->parentTask->priority == 3)
                                         <i class="bi bi-egg-fried"></i>
                                     @elseif ($task->parentTask->priority == 2)
@@ -94,7 +94,7 @@
                                         @endif
 
                                         @if ($childtask->priority == 4)
-                                            <i class="bi bi-egg-fried"></i>
+                                            <i class="fa fa-fire"></i>
                                         @elseif ($childtask->priority == 3)
                                             <i class="bi bi-egg-fried"></i>
                                         @elseif ($childtask->priority == 2)

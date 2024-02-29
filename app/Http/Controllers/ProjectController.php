@@ -29,6 +29,29 @@ class ProjectController extends Controller
 
     }
 
+    public function removeProject($projectId)
+    {
+        $project = Project::findOrFail($projectId);
+        $project->delete();
+        return redirect()->back()->with('success', 'Project removed successfully');
+    }
+
+    public function addNewProject(Request $request)
+    {
+        $validatedData = $request->validate([
+            'project_name' => 'required|string|max:255',
+            'project_lead' => 'required|exists:users,id',
+        ]);
+
+        Project::create([
+            'project_name' => $validatedData['project_name'],
+            'project_lead' => $validatedData['project_lead'],
+        ]);
+
+        return redirect()->back()->with('success', 'New project added successfully');
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */

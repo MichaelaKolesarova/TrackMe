@@ -111,9 +111,9 @@
                 <div class="nav">
                     @if(auth()->user()->is_admin)
                         <div class="sb-sidenav-menu-heading">Admin</div>
-                        <a class="nav-link " href="/home">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            project administration
+                        <a class="nav-link " href="/admin-page">
+                            <div class="sb-nav-link-icon"><i class="fas fa-hammer"></i></div>
+                            Project Administration
                         </a>
                     @endif
                     <div class="sb-sidenav-menu-heading">Core</div>

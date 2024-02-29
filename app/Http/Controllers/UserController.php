@@ -76,4 +76,37 @@ class UserController extends Controller
         $user->save();
         return redirect()->back()->with('success', 'Profile photo deleted successfully');
     }
+
+    public function removeAdmin($userId)
+    {
+        if (auth()->user()->is_admin){
+            $admin = User::find($userId);
+
+            if ($admin && $admin->is_admin) {
+                $admin->is_admin = false;
+                $admin->save();
+            }
+        }
+
+        return redirect()->back();
+
+    }
+
+    public function addNewAdmin(Request $request)
+    {
+
+        if (auth()->user()->is_admin){
+            $validatedData = $request->validate([
+                'assignee' => 'required|exists:users,id'
+            ]);
+
+            $user = User::findOrFail($validatedData['assignee']);
+
+            $user->is_admin = true;
+            $user->save();
+        }
+
+
+        return redirect()->back()->with('success', 'New admin added successfully');
+    }
 }

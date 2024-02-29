@@ -5,6 +5,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -71,7 +72,13 @@ Route::post('/update-chosen-team', [ProjectController::class, 'updateChosenTeamC
 Route::post('/update-button-project', [ProjectController::class, 'updateButtonProject'])->name('update-button-project');
 
 //admin
-Route::get('/admin-page', [App\Http\Controllers\HomeController::class, 'index'])->name('admin-page');
+Route::get('/admin-page', [App\Http\Controllers\HomeController::class, 'admin_page'])->name('admin-page');
+Route::delete('/admin/{userId}', [UserController::class, 'removeAdmin'])->name('removeAdmin');
+Route::post('/add-new-admin', [UserController::class, 'addNewAdmin'])->name('add.new.admin');
+Route::delete('/removeProject/{projectId}', [ProjectController::class, 'removeProject'])->name('removeProject');
+Route::post('/add-new-project', [ProjectController::class, 'addNewProject'])->name('add.new.project');
+Route::delete('/removeTeam/{teamId}', [TeamController::class, 'removeTeam'])->name('removeTeam');
+Route::post('/add-new-team', [TeamController::class, 'addNewTeam'])->name('add.new.team');
 
 
 

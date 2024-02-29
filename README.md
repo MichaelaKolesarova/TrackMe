@@ -40,3 +40,5 @@
 - [ ] predvyplnit team/projekt podla toho, odkial ho otvaram 
 - [ ] team chat - podla teamu 
 - [ ] ochrana kto sa kam moze dostat
+- [ ] enter na posielanie správ
+- [ ] zobrazit hornu listu

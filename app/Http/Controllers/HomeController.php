@@ -26,6 +26,12 @@ class HomeController extends Controller
         return view('personal_dashboard');
     }
 
+    public function admin_page()
+    {
+        return view('admin-page');
+    }
+
+
     public function team()
     {
         return view('team_dashboard');

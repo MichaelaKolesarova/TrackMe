@@ -10,6 +10,28 @@ class TeamController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function removeTeam($teamId)
+    {
+        $team = Team::findOrFail($teamId);
+        $team->delete();
+        return redirect()->back()->with('success', 'Team removed successfully');
+    }
+
+    public function addNewTeam(Request $request)
+    {
+        $validatedData = $request->validate([
+            'team_name' => 'required|string|max:255',
+            'team_lead' => 'required|exists:users,id',
+        ]);
+
+        Team::create([
+            'team_name' => $validatedData['team_name'],
+            'team_lead' => $validatedData['team_lead'],
+        ]);
+
+        return redirect()->back()->with('success', 'New team added successfully');
+    }
     public function index()
     {
         //
