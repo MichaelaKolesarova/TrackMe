@@ -8,7 +8,7 @@
 @section('content')
     <div class="row small-margin">
         <h1 class="col display-3 fw-bolder"><span
-                class="text-gradient d-inline">team dashboard</span></h1>
+                class="text-gradient d-inline">{{$team->team_name}} team dashboard</span></h1>
 
         <a class="col col-lg-3 btn btn-primary fw-bolder small-margin d-flex align-items-center justify-content-center"
            data-bs-toggle="modal" data-bs-target="#ModalCreate">New Task</a>
@@ -30,7 +30,7 @@
 
                                 <div taskStatus="{{TaskStatusEnum::ToDo}}" id="card-tasks-todo" class="min-height">
 
-                                    @foreach(Task::all()->whereNull('assignee')->where('taskStatus', TaskStatusEnum::ToDo->value) as $task)
+                                    @foreach(Task::all()->whereNull('assignee')->where('taskStatus', TaskStatusEnum::ToDo->value)->where('team_assigned_to', $team->id) as $task)
                                         <div id="{{$task->id}}" class="task-card" draggable="true">
                                             <div class="task-name fill-width row">
                                                 <a href="{{ route('task.overview', ['task' => $task->id]) }}"
@@ -262,8 +262,13 @@
         </div>
 
         <div class="col-3 scrollable">
-            <p>Team members</p>
-            @foreach(Team::find(1)->users as $chosenUser)
+            <div class="d-flex align-items-center">
+                <p>Team members</p>
+                @if(auth()->user()->is_admin || auth()->id == $team->team_lead) @endif
+                <button class="btn btn-primary ms-auto small-margin" id="addTeamMemberBtn">Add Team member</button>
+            </div>
+            @include('new_team_member_popup')
+            @foreach($team->users as $chosenUser)
                 <div class="row align-items-center small-margin">
                     @if($chosenUser->profile_picture)
                         <div class="col-auto">
@@ -347,7 +352,16 @@
 
     </script>
 
+    <script>
+        $(document).ready(function () {
+            $('#addTeamMemberBtn').click(function () {
+                $('#ModalCreateNewTeamMember').modal('show');
+            });
+        });
+    </script>
+
     @include('new_task_popup')
     @include('draggable_script')
+
 
 @endsection

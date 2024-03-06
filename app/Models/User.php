@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Helpers\DataStructures\TaskStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -56,9 +57,9 @@ class User extends Authenticatable
         return $this->hasMany(Task::class, 'assignee', )->where('taskStatus', $taskStatus)->get();
     }
 
-    public function teams()
+    public function teams(): BelongsToMany
     {
-        return $this->belongsToMany(Team::class, 'team_membership');
+        return $this->belongsToMany(Team::class, 'team_membership', 'user', 'team', 'id', 'id');
     }
 
 

@@ -121,10 +121,14 @@
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Personal Dashboard
                     </a>
-                    <a class="nav-link " href= "/home_team">
-                        <div class="sb-nav-link-icon"><i class="fa-solid fa-people-group"></i></div>
-                        Team Dashboard
-                    </a>
+                        <div class="sb-sidenav-menu-heading">Teams</div>
+
+                        @foreach(Auth::user()->teams as $team)
+                        <a class="nav-link" href="{{ route('home_team', ['teamId' => $team->id]) }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-people-group"></i></div>
+                            {{ $team->team_name }} Dashboard
+                        </a>
+                        @endforeach
 
                     <div class="sb-sidenav-menu-heading">Chats</div>
                     <a class="nav-link" href="/openTeamChat">

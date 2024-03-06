@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Team;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -32,9 +34,15 @@ class HomeController extends Controller
     }
 
 
-    public function team()
+    public function team($teamId)
     {
-        return view('team_dashboard');
+        $team = Team::find($teamId);
+
+        if (!$team) {
+            abort(404);
+        }
+
+        return view('team_dashboard', ['team' => $team]);
     }
 
     public function profile()

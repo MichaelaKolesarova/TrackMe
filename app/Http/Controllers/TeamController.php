@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TeamController extends Controller
 {
@@ -32,6 +33,25 @@ class TeamController extends Controller
 
         return redirect()->back()->with('success', 'New team added successfully');
     }
+
+    public function addNewTeamMember(Request $request)
+    {
+        $validatedData = $request->validate([
+            'team' => 'required|exists:teams,id',
+            'user' => 'required|exists:users,id',
+        ]);
+
+        DB::table('team_membership')->insert([
+            'team' => $validatedData['team'],
+            'user' => $validatedData['user'],
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return redirect()->back()->with('success', 'New team member added successfully');
+    }
+
+
     public function index()
     {
         //

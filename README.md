@@ -12,20 +12,20 @@
   - [x] autor
   - [x] komentáre
   - [x] ID - skus do id zakomponovat T(task)/P(project)/Team/
-  - [ ] labels
   - [x] projekt ku ktorému je zaradený task
-  - [x] due date - zmena
+  - [ ] due date - zmena
   - [x] log úprav tasku - preklik na osobu, čas 
 - [ ] problémy
 - [x] Dashboardy – s nezaradenými a zaradenými taskami
 - [ ] Úložisko Dokumentov (niečo ako cofluence)
 - [ ] Správy a teamový chaty (možné použiť @ na osoby, teamy, teasky alebo dokumenty)
 - [ ] Video calls/audio calls
-- [ ] admin page - priradovat, dodoberat prava
+- [x] admin page - priradovat, dodoberat prava
 - [ ] paralelizacia taskov - ktore mozu bezat paralelne a ktore musia cakat - nova entita
 - [ ] vyhľadávanie
 ## Nice to have:
 - [ ] Workflowy – grafy ktoré úlohy sa musia robiť postupne a ktoré paralelne a vytvorenie časového horizontu k projektu (každý task musí mať teda estimated čas a reálny čas dokončenia)
+- [ ] labels
 - [ ] Blockers
 - [ ] Šprinty - nastavenie intervalov práce a hodnotenia
 - [ ] Spojenie s GITom

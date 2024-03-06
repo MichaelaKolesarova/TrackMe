@@ -109,6 +109,11 @@ body {
     max-height: calc(100vh - 270px);
 }
 
+.scrollable_all {
+    overflow-y: auto!important;
+    max-height: calc(100vh - 150px);
+}
+
 .profile-picture {
     width: 150px;
     height: 150px;

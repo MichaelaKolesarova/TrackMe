@@ -11,7 +11,7 @@
     </button>
     <div class="dropdown-menu" aria-labelledby="userDropdown">
         @foreach(User::all() as $user)
-            @if($user->id != auth()->id() && $user->id != $chosenUser)
+            @if($user->id != $chosenUser)
                 <a class="dropdown-item" onclick="updateChosenUser({{ $user->id }}) ">{{ $user->name }}</a>
             @endif
         @endforeach

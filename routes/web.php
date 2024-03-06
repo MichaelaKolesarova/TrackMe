@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MessageController;
-use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamController;
@@ -36,7 +35,7 @@ Auth::routes();
 
 //dashboards
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/home_team', [App\Http\Controllers\HomeController::class, 'team'])->name('home_team');
+Route::get('/home_team/{teamId}', [App\Http\Controllers\HomeController::class, 'team'])->name('home_team');
 Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
 
 
@@ -79,6 +78,10 @@ Route::delete('/removeProject/{projectId}', [ProjectController::class, 'removePr
 Route::post('/add-new-project', [ProjectController::class, 'addNewProject'])->name('add.new.project');
 Route::delete('/removeTeam/{teamId}', [TeamController::class, 'removeTeam'])->name('removeTeam');
 Route::post('/add-new-team', [TeamController::class, 'addNewTeam'])->name('add.new.team');
+
+//admining team
+Route::post('/add-new-team-member', [TeamController::class, 'addNewTeamMember'])->name('add.team.member');
+
 
 
 
