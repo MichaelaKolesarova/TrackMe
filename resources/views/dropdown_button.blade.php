@@ -1,8 +1,8 @@
 
 
 @php
-    use App\Helpers\DataStructures\TaskStatusEnum;
-    use App\Models\Task;use App\Models\User;
+    use App\Models\User;
+    use App\Models\Team;
 @endphp
 
 <div class="dropdown col text-end">
@@ -10,10 +10,15 @@
         <span id="chosenUserName">{{ User::find($chosenUser)->name }}</span>
     </button>
     <div class="dropdown-menu" aria-labelledby="userDropdown">
-        @foreach(User::all() as $user)
-            @if($user->id != $chosenUser)
-                <a class="dropdown-item" onclick="updateChosenUser({{ $user->id }}) ">{{ $user->name }}</a>
-            @endif
-        @endforeach
+
+
+        @if($teamInstance = Team::find($chosenTeam))
+            @foreach(User::all() as $user)
+                @if($user->id != $chosenUser)
+                    <a class="dropdown-item" onclick="updateChosenUser({{ $user->id }}, {{ $team}}) ">{{ $user->name }}</a>
+                @endif
+            @endforeach
+
+        @endif
     </div>
 </div>

@@ -16,7 +16,7 @@
     </div>
     <div style="margin: 50px"></div>
     <div class="row">
-        <div class="scrollable col">
+        <div class="scrollable_all col">
 
             <div id="tasks_container" class="col fill-width small-margin ">
                 <div class="row justify-content-around">
@@ -84,7 +84,7 @@
                                 <div taskStatus="{{TaskStatusEnum::InProgress}}" id="card-tasks-inprogres"
                                      class="min-height">
 
-                                    @foreach(Task::all()->whereNull('assignee')->where('taskStatus', TaskStatusEnum::InProgress->value) as $task)
+                                    @foreach(Task::all()->whereNull('assignee')->where('taskStatus', TaskStatusEnum::InProgress->value)->where('team_assigned_to', $team->id) as $task)
                                         <div id="{{$task->id}}" class="task-card" draggable="true">
                                             <div class="task-name fill-width row">
                                                 <a href="{{ route('task.overview', ['task' => $task->id]) }}"
@@ -138,7 +138,7 @@
                                 <div taskStatus="{{TaskStatusEnum::Blocked}}" id="card-tasks-blocked"
                                      class="min-height">
 
-                                    @foreach(Task::all()->whereNull('assignee')->where('taskStatus', TaskStatusEnum::Blocked->value) as $task)
+                                    @foreach(Task::all()->whereNull('assignee')->where('taskStatus', TaskStatusEnum::Blocked->value)->where('team_assigned_to', $team->id) as $task)
                                         <div id="{{$task->id}}" class="task-card" draggable="true">
                                             <div class="task-name fill-width row">
                                                 <a href="{{ route('task.overview', ['task' => $task->id]) }}"
@@ -249,7 +249,7 @@
                 <div class="fs-3 fw-light text-muted col">other team members</div>
 
                 <div id="button">
-                    @include('dropdown_button', ['chosenUser' => $chosenUser ])
+                    @include('dropdown_button', ['chosenUser' => $chosenUser, 'team'  => $team])
                 </div>
 
             </div>
@@ -257,7 +257,7 @@
             <div style="margin: 50px"></div>
 
             <div id="cards">
-                @include('team_dashboard_specific_member_content', ['chosenUser' => $chosenUser ])
+                @include('team_dashboard_specific_member_content', ['chosenUser' => $chosenUser, 'team'  => $team])
             </div>
         </div>
 
@@ -313,13 +313,16 @@
 
 
     <script>
-        function updateChosenUser(userId) {
+        function updateChosenUser(userId, teamId) {
 
 //cards s  úlohami
             $.ajax({
                 type: 'POST',
                 url: '/update-chosen-user',
-                data: {userId: userId},
+                data: {
+                    userId: userId,
+                    teamId: teamId
+                },
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                 },
@@ -336,7 +339,10 @@
             $.ajax({
                 type: 'POST',
                 url: '/update-button',
-                data: {userId: userId},
+                data: {
+                    userId: userId,
+                    teamId: teamId
+                },
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                 },
@@ -346,7 +352,7 @@
                 }
             });
 
-            document.getElementById('button').innerHTML = response;
+            //document.getElementById('button').innerHTML = response;
 
         }
 

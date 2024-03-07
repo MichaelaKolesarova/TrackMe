@@ -2,7 +2,8 @@
 
 @php
     use App\Helpers\DataStructures\TaskStatusEnum;
-    use App\Models\Task;use App\Models\User;
+    use App\Models\Task;
+    use App\Models\User;
 @endphp
 
     <div id="tasks_container" class="col fill-width small-margin">
@@ -17,7 +18,10 @@
 
                         <div taskStatus="{{TaskStatusEnum::ToDo}}" id="card-tasks-todo" class="min-height">
 
-                            @foreach(Task::all()->where('assignee', $chosenUser)->where('taskStatus', App\Helpers\DataStructures\TaskStatusEnum::ToDo->value) as $task)
+                            @foreach(Task::where('assignee', $chosenUser)
+                                ->where('taskStatus', \App\Helpers\DataStructures\TaskStatusEnum::ToDo->value)
+                                ->where('team_assigned_to', $team)
+                                ->get() as $task)
                                 <div id="{{$task->id}}" class="task-card" draggable="true">
                                     <div class="task-name fill-width row">
                                         <a href="{{ route('task.overview', ['task' => $task->id]) }}"
@@ -68,7 +72,10 @@
 
                         <div taskStatus="{{TaskStatusEnum::InProgress}}" id="card-tasks-inprogres" class="min-height">
 
-                            @foreach(Task::all()->where('assignee', $chosenUser)->where('taskStatus', TaskStatusEnum::InProgress->value) as $task)
+                            @foreach(Task::where('assignee', $chosenUser)
+                                ->where('taskStatus', \App\Helpers\DataStructures\TaskStatusEnum::InProgress->value)
+                                ->where('team_assigned_to', $team)
+                                ->get() as $task)
                                 <div id="{{$task->id}}" class="task-card" draggable="true">
                                     <div class="task-name fill-width row">
                                         <a href="{{ route('task.overview', ['task' => $task->id]) }}"
@@ -120,7 +127,10 @@
 
                         <div taskStatus="{{TaskStatusEnum::Blocked}}" id="card-tasks-blocked" class="min-height">
 
-                            @foreach(Task::all()->where('assignee', $chosenUser)->where('taskStatus', TaskStatusEnum::Blocked->value) as $task)
+                            @foreach(Task::where('assignee', $chosenUser)
+                               ->where('taskStatus', \App\Helpers\DataStructures\TaskStatusEnum::Blocked->value)
+                               ->where('team_assigned_to', $team)
+                               ->get() as $task)
                                 <div id="{{$task->id}}" class="task-card" draggable="true">
                                     <div class="task-name fill-width row">
                                         <a href="{{ route('task.overview', ['task' => $task->id]) }}"
@@ -171,7 +181,10 @@
                         </div>
 
                         <div taskStatus="{{TaskStatusEnum::Done}}" id="card-tasks-done" class="min-height">
-                            @foreach(Task::all()->where('assignee', $chosenUser)->where('taskStatus', TaskStatusEnum::Done->value) as $task)
+                            @foreach(Task::where('assignee', $chosenUser)
+                               ->where('taskStatus', \App\Helpers\DataStructures\TaskStatusEnum::Done->value)
+                               ->where('team_assigned_to', $team)
+                               ->get() as $task)
                                 <div id="{{$task->id}}" class="task-card" draggable="true"
                                      onclick="/get-task/{{$task->id}}">
                                     <div class="task-name fill-width row">
