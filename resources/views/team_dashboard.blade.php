@@ -249,7 +249,7 @@
                 <div class="fs-3 fw-light text-muted col">other team members</div>
 
                 <div id="button">
-                    @include('dropdown_button', ['chosenUser' => $chosenUser, 'team'  => $team])
+                    @include('dropdown_button', ['chosenUser' => $chosenUser, 'chosenTeam'  => $team->id])
                 </div>
 
             </div>
@@ -257,7 +257,7 @@
             <div style="margin: 50px"></div>
 
             <div id="cards">
-                @include('team_dashboard_specific_member_content', ['chosenUser' => $chosenUser, 'team'  => $team])
+                @include('team_dashboard_specific_member_content', ['chosenUser' => $chosenUser, 'chosenTeam'  => $team->id])
             </div>
         </div>
 
@@ -352,7 +352,7 @@
                 }
             });
 
-            //document.getElementById('button').innerHTML = response;
+            document.getElementById('button').innerHTML = response;
 
         }
 

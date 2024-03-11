@@ -15,7 +15,7 @@
         @if($teamInstance = Team::find($chosenTeam))
             @foreach(User::all() as $user)
                 @if($user->id != $chosenUser)
-                    <a class="dropdown-item" onclick="updateChosenUser({{ $user->id }}, {{ $team}}) ">{{ $user->name }}</a>
+                    <a class="dropdown-item" onclick="updateChosenUser({{ $user->id }}, {{$chosenTeam}}) ">{{ $user->name }}</a>
                 @endif
             @endforeach
 

@@ -20,7 +20,7 @@
 
                             @foreach(Task::where('assignee', $chosenUser)
                                 ->where('taskStatus', \App\Helpers\DataStructures\TaskStatusEnum::ToDo->value)
-                                ->where('team_assigned_to', $team)
+                                ->where('team_assigned_to', $chosenTeam)
                                 ->get() as $task)
                                 <div id="{{$task->id}}" class="task-card" draggable="true">
                                     <div class="task-name fill-width row">
@@ -74,7 +74,7 @@
 
                             @foreach(Task::where('assignee', $chosenUser)
                                 ->where('taskStatus', \App\Helpers\DataStructures\TaskStatusEnum::InProgress->value)
-                                ->where('team_assigned_to', $team)
+                                ->where('team_assigned_to', $chosenTeam)
                                 ->get() as $task)
                                 <div id="{{$task->id}}" class="task-card" draggable="true">
                                     <div class="task-name fill-width row">
@@ -129,7 +129,7 @@
 
                             @foreach(Task::where('assignee', $chosenUser)
                                ->where('taskStatus', \App\Helpers\DataStructures\TaskStatusEnum::Blocked->value)
-                               ->where('team_assigned_to', $team)
+                               ->where('team_assigned_to', $chosenTeam)
                                ->get() as $task)
                                 <div id="{{$task->id}}" class="task-card" draggable="true">
                                     <div class="task-name fill-width row">
@@ -183,7 +183,7 @@
                         <div taskStatus="{{TaskStatusEnum::Done}}" id="card-tasks-done" class="min-height">
                             @foreach(Task::where('assignee', $chosenUser)
                                ->where('taskStatus', \App\Helpers\DataStructures\TaskStatusEnum::Done->value)
-                               ->where('team_assigned_to', $team)
+                               ->where('team_assigned_to', $chosenTeam)
                                ->get() as $task)
                                 <div id="{{$task->id}}" class="task-card" draggable="true"
                                      onclick="/get-task/{{$task->id}}">

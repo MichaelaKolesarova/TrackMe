@@ -7,7 +7,7 @@
 - [ ] Tasky
   - [x] parent tasks a ich children tasks (môžu byť assigned bud teamu alebo osobám konkrétne)
   - [x] progress
-  - [x] assignee viac assignees
+  - [x] assignee 
   - [ ] viac assignees
   - [x] autor
   - [x] komentáre
@@ -30,6 +30,7 @@
 - [ ] Šprinty - nastavenie intervalov práce a hodnotenia
 - [ ] Spojenie s GITom
 - [ ] bug report - poslat mi mail o bugu
+- [ ] definicia viacerych rolí v tímoch (napr asistent, zastupca, tester, atd.)
 
 
 ## Details, opravy:
@@ -42,3 +43,4 @@
 - [ ] ochrana kto sa kam moze dostat
 - [ ] enter na posielanie správ
 - [ ] zobrazit hornu listu
+- [ ] kontrola ci chcem fakt nieco vymatzat (nejaky popup)

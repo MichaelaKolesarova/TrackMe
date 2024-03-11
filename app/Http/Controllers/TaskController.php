@@ -196,7 +196,7 @@ class TaskController extends Controller
     {
         $userId = $request['userId'];
         $teamId = $request['teamId'];
-        return view('team_dashboard_specific_member_content',['chosenUser' => $userId, 'team'  => $teamId])->render();
+        return view('team_dashboard_specific_member_content',['chosenUser' => $userId, 'chosenTeam'  => $teamId])->render();
 
     }
 
@@ -204,7 +204,7 @@ class TaskController extends Controller
     {
         $userId = $request['userId'];
         $teamId = $request['teamId'];
-        return view('dropdown_button',['chosenUser' => $userId, 'team'  => $teamId])->render();
+        return view('dropdown_button',['chosenUser' => $userId, 'chosenTeam'  => $teamId])->render();
 
     }
 }
