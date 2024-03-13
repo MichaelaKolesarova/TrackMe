@@ -3,7 +3,7 @@
 ## Must have:
 - [x] Teamy 
 - [x] projekty
-- [x] Úprava údajov používateľa (oprav upload fotky)
+- [x] Úprava údajov používateľa 
 - [ ] Tasky
   - [x] parent tasks a ich children tasks (môžu byť assigned bud teamu alebo osobám konkrétne)
   - [x] progress
@@ -18,13 +18,14 @@
 - [ ] problémy
 - [x] Dashboardy – s nezaradenými a zaradenými taskami
 - [ ] Úložisko Dokumentov (niečo ako cofluence)
-- [ ] Správy a teamový chaty (možné použiť @ na osoby, teamy, teasky alebo dokumenty)
+- [ ] Správy a teamový chaty  - oprťavit teamové chaty
+- [ ]možné použiť @ na osoby, teamy, teasky alebo dokumenty)
 - [ ] Video calls/audio calls
 - [x] admin page - priradovat, dodoberat prava
 - [ ] paralelizacia taskov - ktore mozu bezat paralelne a ktore musia cakat - nova entita
 - [ ] vyhľadávanie
-## Nice to have:
 - [ ] Workflowy – grafy ktoré úlohy sa musia robiť postupne a ktoré paralelne a vytvorenie časového horizontu k projektu (každý task musí mať teda estimated čas a reálny čas dokončenia)
+## Nice to have:
 - [ ] labels
 - [ ] Blockers
 - [ ] Šprinty - nastavenie intervalov práce a hodnotenia
@@ -42,5 +43,7 @@
 - [ ] team chat - podla teamu 
 - [ ] ochrana kto sa kam moze dostat
 - [ ] enter na posielanie správ
+- [ ] log - cas
 - [ ] zobrazit hornu listu
 - [ ] kontrola ci chcem fakt nieco vymatzat (nejaky popup)
+- [ ] oprav upload fotky

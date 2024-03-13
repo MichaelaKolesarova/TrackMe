@@ -3,7 +3,8 @@
     use App\Helpers\DataStructures\TaskStatusEnum;
     use App\Helpers\DataStructures\EntitiesEnum;
     use App\Models\Log;
-    use App\Models\Task;use App\Models\User;
+    use App\Models\Task;
+    use App\Models\User;
 @endphp
 
 @extends('layouts.base')
@@ -30,6 +31,9 @@
                 <div class="col small-margin scrollable">
                     <!--TODO tu ide progress bar - workflows-->
                     <div class="fs-3 fw-light text-muted">progress bar</div>
+                    <div id="gannt-chart">
+
+                    </div>
 
 
                     <!--ASSIGNED To OTHER TEAM MEMBERS-->
@@ -93,6 +97,44 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const myData = [];
+            const tasks = {!! json_encode(Task::all()->where('project', $project->id)->toArray()) !!};
+
+            Object.values(tasks).forEach(task => {
+
+                const taskData = {
+                    group: task.taskStatus,
+                    data: [{
+                        label: task.title,
+                        id: task.id,
+                        data: [{
+                            timeRange: [new Date(task.created_at), new Date(task.dueDate)],
+                            val: task.taskStatus,
+                            id: task.id,
+                        }]
+                    }]
+                };
+
+                myData.push(taskData);
+            });
+
+            const myChart = TimelinesChart()('#gannt-chart');
+            myChart.width([screen.width * 0.6]);
+            myChart.zQualitative(true);
+            myChart.zDataLabel('status');
+            myChart.onSegmentClick(segClicker);
+            myChart.data(myData);
+        });
+
+        function segClicker(segment) {
+            console.log(segment);
+            const taskId = segment.data.id;
+            window.location.href = `/task_overview/${taskId}`;
+        }
+    </script>
 
     <script>
         function updateChosenTeam(teamId) {
