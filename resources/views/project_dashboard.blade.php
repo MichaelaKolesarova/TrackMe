@@ -100,32 +100,43 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const myData = [];
+            const statusMap = {
+                '1': 'To Do',
+                '2': 'In Progress',
+                '3': 'Blocked',
+                '4': 'Done'
+            };
+
+            const myData = [{
+                group: "project tasks",
+                data: []
+            }];
             const tasks = {!! json_encode(Task::all()->where('project', $project->id)->toArray()) !!};
 
             Object.values(tasks).forEach(task => {
-
                 const taskData = {
-                    group: task.taskStatus,
+                    label: task.title,
                     data: [{
-                        label: task.title,
+                        timeRange: [new Date(task.created_at), new Date(task.dueDate).setHours(23, 59, 59, 999)],
+                        val: statusMap[task.taskStatus],
                         id: task.id,
-                        data: [{
-                            timeRange: [new Date(task.created_at), new Date(task.dueDate)],
-                            val: task.taskStatus,
-                            id: task.id,
-                        }]
                     }]
                 };
 
-                myData.push(taskData);
+                myData[0].data.push(taskData);
             });
+
+
+            const valColorScale = d3.scaleOrdinal()
+                .domain(['To Do', 'In Progress', 'Blocked', 'Done'])
+                .range(['blue', 'yellow', 'red', 'green']);
 
             const myChart = TimelinesChart()('#gannt-chart');
             myChart.width([screen.width * 0.6]);
             myChart.zQualitative(true);
             myChart.zDataLabel('status');
             myChart.onSegmentClick(segClicker);
+            myChart.zColorScale(valColorScale);
             myChart.data(myData);
         });
 
