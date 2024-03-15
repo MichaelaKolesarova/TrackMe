@@ -14,11 +14,10 @@
   - [x] ID - skus do id zakomponovat T(task)/P(project)/Team/
   - [x] projekt ku ktorému je zaradený task
   - [ ] due date - zmena
-  - [x] log úprav tasku - preklik na osobu, čas 
-- [ ] problémy
+  - [x] log úprav tasku - preklik na osobu, čas
 - [x] Dashboardy – s nezaradenými a zaradenými taskami
 - [ ] Úložisko Dokumentov (niečo ako cofluence)
-- [ ] Správy a teamový chaty  - oprťavit teamové chaty
+- [x] Správy a teamový chaty  
 - [ ]možné použiť @ na osoby, teamy, teasky alebo dokumenty)
 - [ ] Video calls/audio calls
 - [x] admin page - priradovat, dodoberat prava
@@ -30,7 +29,7 @@
 - [ ] Blockers
 - [ ] Šprinty - nastavenie intervalov práce a hodnotenia
 - [ ] Spojenie s GITom
-- [ ] bug report - poslat mi mail o bugu
+- [ ] bug report - problémy
 - [ ] definicia viacerych rolí v tímoch (napr asistent, zastupca, tester, atd.)
 
 
@@ -47,3 +46,5 @@
 - [ ] zobrazit hornu listu
 - [ ] kontrola ci chcem fakt nieco vymatzat (nejaky popup)
 - [ ] oprav upload fotky
+- [ ] upload PDF - niektore neidu a neviem rozoznat preco (nebude to velkostou)
+- [ ] opravit team chats - komu vsetkemu - viac teams

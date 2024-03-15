@@ -73,6 +73,8 @@ Route::post('/update-button-project', [ProjectController::class, 'updateButtonPr
 
 //documentation
 Route::post('/upload', [FileController::class, 'upload'])->name('upload');
+Route::post('/download', [FileController::class, 'upload'])->name('download');
+Route::get('/preview-pdf', [FileController::class, 'previewPdf'])->name('previewPdf');
 Route::get('/open-documentation', [FileController::class, 'openDocumentation'])->name('open-documentation');
 
 

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Storage;
 use App\Models\File;
 use Illuminate\Http\Request;
 
@@ -23,7 +23,7 @@ class FileController extends Controller
         if ($request->hasAny('file')) {
             $file = $request->file('file');
             $fileName = $file->getClientOriginalName();
-            $filePath = $file->store('public/PDF_files');
+            $filePath = $file->store(path: 'public/PDF_files');
             $uploadedFile = new File();
             $uploadedFile->file_name = $fileName;
             $uploadedFile->file_path = $filePath;
@@ -35,6 +35,15 @@ class FileController extends Controller
         } else {
             return response()->json(['success' => false, 'message' => 'No file uploaded'], 400);
         }
+    }
+
+    public function previewPdf(Request $request)
+    {
+        //if (!Storage::exists($file->file_path)) {
+          //  abort(404);
+        //}
+
+        return view('PDF_preview', ['file' =>  $request->input('file_id')]);
     }
 
 
