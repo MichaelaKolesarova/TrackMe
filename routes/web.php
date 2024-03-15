@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
@@ -69,6 +70,11 @@ Route::post('/editMessage', [MessageController::class, 'editMessage'])->name('ed
 Route::get('/project_dashboard/{project}', [ProjectController::class, 'showProjectDashboard'])->name('project_dashboard');
 Route::post('/update-chosen-team', [ProjectController::class, 'updateChosenTeamCards'])->name('update-chosen-team');
 Route::post('/update-button-project', [ProjectController::class, 'updateButtonProject'])->name('update-button-project');
+
+//documentation
+Route::post('/upload', [FileController::class, 'upload'])->name('upload');
+Route::get('/open-documentation', [FileController::class, 'openDocumentation'])->name('open-documentation');
+
 
 //admin
 Route::get('/admin-page', [App\Http\Controllers\HomeController::class, 'admin_page'])->name('admin-page');

@@ -56,7 +56,7 @@ class UserController extends Controller
     public function updatePicture(Request $request)
     {
         if ($request->has('profile_picture')) {
-            $binaryData = base64_decode($request->input('profile_picture')); // Decode base64-encoded binary data
+            $binaryData = base64_decode($request->input('profile_picture'));
 
             $user = User::find(auth()->id());
             $user->profile_picture = $binaryData;

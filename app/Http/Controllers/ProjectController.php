@@ -15,6 +15,7 @@ class ProjectController extends Controller
         return view('project_dashboard', ['project' => $project]);
 
     }
+
     public function updateChosenTeamCards(Request $request)
     {
         $teamId = $request['teamId'];

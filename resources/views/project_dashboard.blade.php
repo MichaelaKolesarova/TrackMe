@@ -28,12 +28,15 @@
                         <a class="text-gradient" href="{{ route('openChat', ['userId' => $project->project_lead]) }}"
                             style="color: #1a1e21">{{User::find($project->project_lead)->name}}</a></span></h5>
 
+                <h5 class="fs-3 text-muted small-margin">project documentation: <span class=" a_hover">
+                        <a class="text-gradient" href="{{ route('open-documentation', ['entityType' => EntitiesEnum::Project, 'entityId' => $project->id]) }}"
+                           style="color: #1a1e21">here</a></span></h5>
+
+
                 <div class="col small-margin scrollable">
                     <!--TODO tu ide progress bar - workflows-->
-                    <div class="fs-3 fw-light text-muted">progress bar</div>
-                    <div id="gannt-chart">
-
-                    </div>
+                    <h5 class="fs-3 fw-light text-muted">progress bar</h5>
+                    <div id="gannt-chart" class="margin-between-sections"></div>
 
 
                     <!--ASSIGNED To OTHER TEAM MEMBERS-->
