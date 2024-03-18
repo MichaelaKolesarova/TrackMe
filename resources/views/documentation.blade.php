@@ -27,11 +27,25 @@
     <div class="scrollable_all">
 
         @foreach (File::where('entity_type', $entityType)->where('entity_id', $entityId)->get() as $file)
-            <div>
-                <span>{{ $file->file_name }}</span>
-                <a href="{{ route('download', ['file_id' => $file->id]) }}" target="_blank">Download</a>
-                <a href="{{ route('previewPdf', ['file_id' => $file->id]) }}" >Preview</a>
+            <div class="be-comment-text small-margin">
+
+                <a href="{{ route('previewPdf', ['file_id' => $file->id]) }}" style="text-decoration: none; color: inherit" class="text-gradient">
+                    <span class="a_hover">{{ $file->file_name }}</span>
+                </a>
+
+                <div class="float-end">
+                    <a href="{{ route('download', ['file_id' => $file->id]) }}" target="_blank" class="btn btn-primary btn-sm mx-1 d-inline">
+                        <i class="fas fa-download"></i>
+                    </a>
+
+                    <a href="{{ route('deleteFile', ['file_id' => $file->id]) }}" class="btn btn-danger btn-sm mx-1 d-inline">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
             </div>
+
+
+
         @endforeach
     </div>
 
@@ -56,12 +70,14 @@
                 .then(data => {
                     if (data.success) {
                         console.log('File uploaded successfully:', data);
+                        window.location.reload();
                     } else {
                         console.error('Failed to upload file:', data.message);
                     }
                 })
                 .catch(error => {
                     console.error('There was an error uploading the file:', error);
+                    window.location.reload();
                 });
         }
     </script>

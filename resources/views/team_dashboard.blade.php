@@ -1,6 +1,7 @@
 @php
     use App\Helpers\DataStructures\TaskStatusEnum;
-    use App\Models\Task;use App\Models\Team;use App\Models\User;
+    use App\Helpers\DataStructures\EntitiesEnum;
+    use App\Models\Task;
 @endphp
 
 @extends('layouts.base')
@@ -12,6 +13,9 @@
 
         <a class="col col-lg-3 btn btn-primary fw-bolder small-margin d-flex align-items-center justify-content-center"
            data-bs-toggle="modal" data-bs-target="#ModalCreate">New Task</a>
+        <h5 class="fs-3 text-muted ">project documentation: <span class=" a_hover">
+                        <a class="text-gradient" href="{{ route('open-documentation', ['entityType' => EntitiesEnum::Team, 'entityId' => $team->id]) }}"
+                           style="color: #1a1e21">here</a></span></h5>
         <div class="fs-3 fw-light text-muted">unassigned</div>
     </div>
     <div style="margin: 50px"></div>

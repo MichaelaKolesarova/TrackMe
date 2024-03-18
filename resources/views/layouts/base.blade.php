@@ -1,4 +1,10 @@
-@php use App\Models\User; @endphp
+@php
+    use App\Models\User;
+    use App\Helpers\DataStructures\EntitiesEnum;
+    @endphp
+
+
+
     <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -46,13 +52,6 @@
     <!--gannts chart-->
     <script src="https://unpkg.com/timelines-chart"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-        crossorigin="anonymous"
-    />
 
 
 </head>
@@ -132,6 +131,11 @@
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Personal Dashboard
                     </a>
+                        <a class="nav-link" href="{{ route('open-documentation', ['entityType' => EntitiesEnum::Person, 'entityId' => auth()->id()]) }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
+                            Personal Documents
+                        </a>
+
                         <div class="sb-sidenav-menu-heading">Teams</div>
 
                         @foreach(Auth::user()->teams as $team)

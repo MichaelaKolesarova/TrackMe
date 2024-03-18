@@ -18,7 +18,7 @@
         </div>
 
         @foreach(User::all()->where('is_admin', true) as $admin)
-            <div class="be-comment-text">
+            <div class="be-comment-text small-margin">
                 <div class="d-flex align-items-center">
                     <div class="mr-auto d-inline">
                         <p class="a_hover small-margin">
@@ -47,7 +47,7 @@
             <button class="btn btn-primary ml-auto" id="addProjectBtn">Add Project</button>
         </div>
         @foreach(Project::all() as $project)
-            <div class="be-comment-text">
+            <div class="be-comment-text small-margin">
                 <div class="d-flex align-items-center">
                     <div class="mr-auto d-inline">
                         <p class="a_hover small-margin mr-2 a_hover">
@@ -74,7 +74,7 @@
             <button class="btn btn-primary ml-auto" id="addTeamBtn">Add Team</button>
         </div>
         @foreach(Team::all() as $team)
-            <div class="be-comment-text">
+            <div class="be-comment-text small-margin">
                 <div class="d-flex align-items-center">
                     <div class="mr-auto d-inline">
                         <p class="a_hover small-margin mr-2 a_hover">

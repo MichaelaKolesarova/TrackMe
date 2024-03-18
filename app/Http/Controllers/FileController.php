@@ -31,7 +31,7 @@ class FileController extends Controller
             $uploadedFile->entity_id = $request->input('entity_id');
             $uploadedFile->save();
 
-            return response()->json(['success' => true, 'file_path' => $filePath]);
+            return redirect()->back()->with('success', 'File uploaded successfully.');
         } else {
             return response()->json(['success' => false, 'message' => 'No file uploaded'], 400);
         }
@@ -44,6 +44,24 @@ class FileController extends Controller
         //}
 
         return view('PDF_preview', ['file' =>  $request->input('file_id')]);
+    }
+
+    public function deleteFile($file_id)
+    {
+        $file = File::find($file_id);
+        if ($file) {
+            Storage::delete($file->file_path);
+            $file->delete();
+            return redirect()->back()->with('success', 'File deleted successfully.');
+        } else {
+            return redirect()->back()->with('error', 'File not found.');
+        }
+    }
+
+    public function download($file_id)
+    {
+        $file = File::findOrFail($file_id);
+        return Storage::download($file->file_path, $file->file_name);
     }
 
 
